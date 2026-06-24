@@ -1158,41 +1158,51 @@
             </div>
             <div class="pseudocode-box">
                 <span class="pc-comment">// Pseudocode - Algoritma Penyelesaian</span><br>
-                <span class="keyword">START</span>
+               START
 
-    <span class="comment">// === 1. INPUT ===</span>
-    <span class="var">pelapor</span>     = <span class="func">pilihPelapor</span>()
-    <span class="var">perangkat</span>   = <span class="func">pilihPerangkatRusak</span>()
+    // === 1. INPUT ===
+    // Pengguna memilih pelapor dan perangkat yang sedang rusak
+    pelapor = pilihPelapor()             // Objek Pelapor
+    perangkat = pilihPerangkatRusak()    // Objek Perangkat (status = 'Rusak')
 
-    <span class="comment">// === 2. PROSES: Mencari Laporan yang Tepat ===</span>
-    <span class="var">laporanDitemukan</span> = <span class="keyword">null</span>
+    // === 2. PROSES: Mencari Laporan yang Tepat ===
+    // Inisialisasi variabel untuk menyimpan laporan yang ditemukan
+    laporanDitemukan = null
 
-    <span class="keyword">FOR</span> each <span class="var">laporan</span> <span class="keyword">in</span> <span class="var">pelapor</span>.<span class="var">daftarLaporanAktif</span> <span class="keyword">DO</span>
-        <span class="keyword">IF</span> <span class="var">laporan</span>.<span class="var">perangkat</span>.<span class="var">id</span> == <span class="var">perangkat</span>.<span class="var">id</span> <span class="keyword">THEN</span>
-            <span class="var">laporanDitemukan</span> = <span class="var">laporan</span>
-            <span class="keyword">BREAK</span>
-        <span class="keyword">END IF</span>
-    <span class="keyword">END FOR</span>
+    // Loop melalui daftar laporan AKTIF milik pelapor tersebut
+    FOR each laporan in pelapor.daftarLaporanAktif DO
+        // Cocokkan apakah perangkat di laporan ini sama dengan yang dipilih
+        IF laporan.perangkat.id == perangkat.id THEN
+            laporanDitemukan = laporan
+            BREAK   // Hentikan pencarian karena sudah ketemu
+        END IF
+    END FOR
 
-    <span class="comment">// === 3. VALIDASI &amp; EKSEKUSI ===</span>
-    <span class="keyword">IF</span> <span class="var">laporanDitemukan</span> != <span class="keyword">null</span> <span class="operator">AND</span> <span class="var">perangkat</span>.<span class="var">status</span> == <span class="string">'Rusak'</span> <span class="keyword">THEN</span>
+    // === 3. VALIDASI & EKSEKUSI ===
+    // Cek apakah laporan ditemukan DAN perangkat masih berstatus Rusak
+    IF laporanDitemukan != null AND perangkat.status == 'Rusak' THEN
 
-        <span class="comment">// A. Perbaiki Perangkat</span>
-        <span class="var">perangkat</span>.<span class="var">status</span> = <span class="string">'Tersedia'</span>
+        // A. Perbaiki Perangkat (ubah status)
+        perangkat.status = 'Tersedia'
 
-        <span class="comment">// B. Tandai Laporan Selesai</span>
-        <span class="var">laporanDitemukan</span>.<span class="var">tanggalSelesai</span> = <span class="func">currentDateTime</span>()
-        <span class="var">laporanDitemukan</span>.<span class="var">isSukses</span> = <span class="keyword">true</span>
+        // B. Tandai Laporan Selesai (isi tanggal dan status sukses)
+        laporanDitemukan.tanggalSelesai = currentDateTime()  // Waktu sekarang
+        laporanDitemukan.isSukses = true
 
-        <span class="comment">// C. Hapus dari daftar aktif pelapor</span>
-        <span class="var">pelapor</span>.<span class="func">hapusLaporanAktif</span>(<span class="var">laporanDitemukan</span>)
+        // C. Pindahkan/Hapus Laporan dari daftar Aktif Pelapor
+        // (Biasanya dipindah ke histori, tapi di sini kita hapus dari aktif)
+        pelapor.hapusLaporanAktif(laporanDitemukan)
 
-        <span class="comment">// === 4. OUTPUT ===</span>
-        <span class="func">cetakNota</span>(<span class="var">laporanDitemukan</span>)
+        // === 4. OUTPUT ===
+        // Cetak nota perbaikan sebagai bukti
+        cetakNota(laporanDitemukan)
 
-    <span class="keyword">ELSE</span>
-        <span class="func">tampilkanError</span>(<span class="string">"Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span>)
-    <span class="keyword">END IF</span>
+    ELSE
+        // Jika laporan tidak ditemukan atau perangkat sudah tidak rusak
+        tampilkanError("Laporan tidak ditemukan atau perangkat sudah diperbaiki.")
+    END IF
+
+END
 
 <span class="keyword">END</span>
             </div>
