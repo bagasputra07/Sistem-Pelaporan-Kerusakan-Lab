@@ -1158,19 +1158,43 @@
             </div>
             <div class="pseudocode-box">
                 <span class="pc-comment">// Pseudocode - Algoritma Penyelesaian</span><br>
-                <span class="pc-keyword">START</span><br>
-                &nbsp;&nbsp;<span class="pc-var">pelapor</span> = pilihPelapor()<br>
-                &nbsp;&nbsp;<span class="pc-var">perangkat</span> = pilihPerangkatRusak()<br>
-                &nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Rusak'</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;pelapor.hapusLaporan(perangkat)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;perangkat.selesaikan()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;laporan.tanggalSelesai = <span class="pc-func">now</span>()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;laporan.isSukses = <span class="pc-keyword">true</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;cetakNota(laporan)<br>
-                &nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanError(<span class="pc-string">"Perangkat tidak rusak"</span>)<br>
-                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                <span class="pc-keyword">END</span>
+                <span class="keyword">START</span>
+
+    <span class="comment">// === 1. INPUT ===</span>
+    <span class="var">pelapor</span>     = <span class="func">pilihPelapor</span>()
+    <span class="var">perangkat</span>   = <span class="func">pilihPerangkatRusak</span>()
+
+    <span class="comment">// === 2. PROSES: Mencari Laporan yang Tepat ===</span>
+    <span class="var">laporanDitemukan</span> = <span class="keyword">null</span>
+
+    <span class="keyword">FOR</span> each <span class="var">laporan</span> <span class="keyword">in</span> <span class="var">pelapor</span>.<span class="var">daftarLaporanAktif</span> <span class="keyword">DO</span>
+        <span class="keyword">IF</span> <span class="var">laporan</span>.<span class="var">perangkat</span>.<span class="var">id</span> == <span class="var">perangkat</span>.<span class="var">id</span> <span class="keyword">THEN</span>
+            <span class="var">laporanDitemukan</span> = <span class="var">laporan</span>
+            <span class="keyword">BREAK</span>
+        <span class="keyword">END IF</span>
+    <span class="keyword">END FOR</span>
+
+    <span class="comment">// === 3. VALIDASI &amp; EKSEKUSI ===</span>
+    <span class="keyword">IF</span> <span class="var">laporanDitemukan</span> != <span class="keyword">null</span> <span class="operator">AND</span> <span class="var">perangkat</span>.<span class="var">status</span> == <span class="string">'Rusak'</span> <span class="keyword">THEN</span>
+
+        <span class="comment">// A. Perbaiki Perangkat</span>
+        <span class="var">perangkat</span>.<span class="var">status</span> = <span class="string">'Tersedia'</span>
+
+        <span class="comment">// B. Tandai Laporan Selesai</span>
+        <span class="var">laporanDitemukan</span>.<span class="var">tanggalSelesai</span> = <span class="func">currentDateTime</span>()
+        <span class="var">laporanDitemukan</span>.<span class="var">isSukses</span> = <span class="keyword">true</span>
+
+        <span class="comment">// C. Hapus dari daftar aktif pelapor</span>
+        <span class="var">pelapor</span>.<span class="func">hapusLaporanAktif</span>(<span class="var">laporanDitemukan</span>)
+
+        <span class="comment">// === 4. OUTPUT ===</span>
+        <span class="func">cetakNota</span>(<span class="var">laporanDitemukan</span>)
+
+    <span class="keyword">ELSE</span>
+        <span class="func">tampilkanError</span>(<span class="string">"Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span>)
+    <span class="keyword">END IF</span>
+
+<span class="keyword">END</span>
             </div>
         </div>
 
