@@ -1158,189 +1158,180 @@
             </div>
             <div class="pseudocode-box">
                 <span class="pc-comment">// Pseudocode - Algoritma Penyelesaian</span><br>
-               // Pseudocode - Algoritma Penyelesaian (Perbaikan Laporan)
-// { Menangani penyelesaian laporan kerusakan perangkat lab dengan pendekatan OOP }
-
-<span class="pc-keyword">DEKLARASI</span>
-
-    <span class="pc-comment">// Tipe bentukan untuk objek Laporan</span>
-    <span class="pc-keyword">CLASS</span> <span class="pc-var">Laporan</span>
-        <span class="pc-keyword">PRIVATE</span> idLaporan : string
-        <span class="pc-keyword">PRIVATE</span> idPerangkat : string
-        <span class="pc-keyword">PRIVATE</span> deskripsi : string
-        <span class="pc-keyword">PRIVATE</span> tanggal : date
-        <span class="pc-keyword">PRIVATE</span> pelapor : string
-        <span class="pc-keyword">PRIVATE</span> status : string
-        <span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime
-        <span class="pc-keyword">PRIVATE</span> tanggalSelesai : datetime
-        <span class="pc-keyword">PRIVATE</span> isSukses : boolean
-
-        <span class="pc-comment">// Konstruktor (Proses OOP: Membuat objek)</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)
-            <span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat
-            <span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi
-            <span class="pc-keyword">this</span>.tanggal &lt;- tanggal
-            <span class="pc-keyword">this</span>.pelapor &lt;- pelapor
-            <span class="pc-keyword">this</span>.idLaporan &lt;- generateUniqueID()
-            <span class="pc-comment">// Proses: generate ID otomatis</span>
-            <span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>
-            <span class="pc-comment">// Proses: set status awal</span>
-            <span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()
-            <span class="pc-comment">// Proses: catat waktu</span>
-            <span class="pc-keyword">this</span>.tanggalSelesai &lt;- null
-            <span class="pc-keyword">this</span>.isSukses &lt;- <span class="pc-keyword">FALSE</span>
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Proses: Menyelesaikan laporan</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">selesaikan</span>()
-            <span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Selesai"</span>
-            <span class="pc-keyword">this</span>.tanggalSelesai &lt;- currentDateTime()
-            <span class="pc-keyword">this</span>.isSukses &lt;- <span class="pc-keyword">TRUE</span>
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Proses: Mengubah status laporan</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">updateStatus</span>(statusBaru)
-            <span class="pc-keyword">this</span>.status &lt;- statusBaru
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Fungsi untuk mendapatkan ID laporan (Output)</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">getId</span>() -> string
-            <span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan
-        <span class="pc-keyword">END METHOD</span>
-    <span class="pc-keyword">END CLASS</span>
-
-    <span class="pc-comment">// Tipe bentukan untuk objek Pelapor</span>
-    <span class="pc-keyword">CLASS</span> <span class="pc-var">Pelapor</span>
-        <span class="pc-keyword">PRIVATE</span> nama : string
-        <span class="pc-keyword">PRIVATE</span> daftarLaporanAktif : array of Laporan
-
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(nama)
-            <span class="pc-keyword">this</span>.nama &lt;- nama
-            <span class="pc-keyword">this</span>.daftarLaporanAktif &lt;- []
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Proses: Menambahkan laporan ke daftar aktif</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">tambahLaporan</span>(laporan)
-            <span class="pc-keyword">this</span>.daftarLaporanAktif.push(laporan)
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Proses: Menghapus laporan dari daftar aktif</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">hapusLaporanAktif</span>(laporan)
-            <span class="pc-keyword">FOR</span> i FROM 0 TO <span class="pc-keyword">this</span>.daftarLaporanAktif.length - 1 <span class="pc-keyword">DO</span>
-                <span class="pc-condition">IF</span> <span class="pc-keyword">this</span>.daftarLaporanAktif[i] == laporan <span class="pc-condition">THEN</span>
-                    <span class="pc-keyword">this</span>.daftarLaporanAktif.splice(i, 1)
-                    <span class="pc-keyword">BREAK</span>
-                <span class="pc-condition">END IF</span>
-            <span class="pc-keyword">END FOR</span>
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Fungsi untuk mendapatkan daftar laporan aktif (Output)</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">getDaftarLaporan</span>() -> array of Laporan
-            <span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.daftarLaporanAktif
-        <span class="pc-keyword">END METHOD</span>
-    <span class="pc-keyword">END CLASS</span>
-
-    <span class="pc-comment">// Tipe bentukan untuk objek Perangkat</span>
-    <span class="pc-keyword">CLASS</span> <span class="pc-var">Perangkat</span>
-        <span class="pc-keyword">PRIVATE</span> id : string
-        <span class="pc-keyword">PRIVATE</span> nama : string
-        <span class="pc-keyword">PRIVATE</span> status : string
-        <span class="pc-comment">// 'Tersedia' atau 'Rusak'</span>
-
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(id, nama, status)
-            <span class="pc-keyword">this</span>.id &lt;- id
-            <span class="pc-keyword">this</span>.nama &lt;- nama
-            <span class="pc-keyword">this</span>.status &lt;- status
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Proses: Menandai perangkat sebagai selesai diperbaiki</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">selesaikan</span>()
-            <span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Tersedia"</span>
-        <span class="pc-keyword">END METHOD</span>
-
-        <span class="pc-comment">// Fungsi untuk mendapatkan status (Output)</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">getStatus</span>() -> string
-            <span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.status
-        <span class="pc-keyword">END METHOD</span>
-    <span class="pc-keyword">END CLASS</span>
-
-    <span class="pc-comment">// Variabel global untuk simulasi</span>
-    daftarPelapor : array of Pelapor
-    daftarPerangkat : array of Perangkat
-    laporanDitemukan : Laporan
-
-    <span class="pc-comment">// Variabel untuk input</span>
-    pilihanPelapor : string
-    pilihanPerangkat : string
-    dataValid : boolean
-
-<span class="pc-keyword">ALGORITMA UTAMA</span>
-
-    <span class="pc-comment">// === MULAI ===</span>
-    OUTPUT <span class="pc-string">"=== SISTEM PENYELESAIAN LAPORAN KERUSAKAN PERANGKAT LAB ==="</span>
-
-    <span class="pc-comment">// === 1. INPUT (dengan validasi) ===</span>
-    <span class="pc-keyword">REPEAT</span>
-        OUTPUT <span class="pc-string">"Masukkan Nama Pelapor : "</span>
-        INPUT pilihanPelapor
-
-        OUTPUT <span class="pc-string">"Masukkan ID Perangkat Rusak : "</span>
-        INPUT pilihanPerangkat
-
-        <span class="pc-comment">// Proses Validasi: pastikan pelapor dan perangkat ada</span>
-        pelapor &lt;- cariPelapor(pilihanPelapor)
-        perangkat &lt;- cariPerangkat(pilihanPerangkat)
-
-        <span class="pc-condition">IF</span> (pelapor == null OR perangkat == null) <span class="pc-condition">THEN</span>
-            dataValid &lt;- <span class="pc-keyword">FALSE</span>
-            OUTPUT <span class="pc-string">"ERROR: Pelapor atau perangkat tidak ditemukan!"</span>
-        <span class="pc-condition">ELSE</span>
-            dataValid &lt;- <span class="pc-keyword">TRUE</span>
-        <span class="pc-condition">END IF</span>
-    <span class="pc-keyword">UNTIL</span> (dataValid == <span class="pc-keyword">TRUE</span>)
-
-    <span class="pc-comment">// === 2. PROSES: Mencari Laporan yang Tepat ===</span>
-    laporanDitemukan &lt;- null
-
-    <span class="pc-keyword">FOR</span> each laporan IN pelapor.daftarLaporanAktif <span class="pc-keyword">DO</span>
-        <span class="pc-condition">IF</span> laporan.idPerangkat == perangkat.id <span class="pc-condition">THEN</span>
-            laporanDitemukan &lt;- laporan
-            <span class="pc-keyword">BREAK</span>
-        <span class="pc-condition">END IF</span>
-    <span class="pc-keyword">END FOR</span>
-
-    <span class="pc-comment">// === 3. VALIDASI & EKSEKUSI ===</span>
-    <span class="pc-condition">IF</span> (laporanDitemukan != null AND perangkat.status == <span class="pc-string">"Rusak"</span>) <span class="pc-condition">THEN</span>
-
-        <span class="pc-comment">// A. Perbaiki Perangkat (ubah status)</span>
-        perangkat.selesaikan()
-
-        <span class="pc-comment">// B. Tandai Laporan Selesai</span>
-        laporanDitemukan.selesaikan()
-
-        <span class="pc-comment">// C. Hapus dari daftar aktif pelapor</span>
-        pelapor.hapusLaporanAktif(laporanDitemukan)
-
-        <span class="pc-comment">// === 4. OUTPUT ===</span>
-        OUTPUT <span class="pc-string">"----------------------------------------------"</span>
-        OUTPUT <span class="pc-string">"SUKSES! Laporan kerusakan telah selesai diperbaiki."</span>
-        OUTPUT <span class="pc-string">"ID Laporan      : "</span> + laporanDitemukan.getId()
-        OUTPUT <span class="pc-string">"Status          : Selesai"</span>
-        OUTPUT <span class="pc-string">"Tanggal Selesai : "</span> + laporanDitemukan.tanggalSelesai
-        OUTPUT <span class="pc-string">"----------------------------------------------"</span>
-        OUTPUT <span class="pc-string">"Nota perbaikan telah dicetak."</span>
-        cetakNota(laporanDitemukan)
-        <span class="pc-comment">// Proses cetak nota</span>
-
-    <span class="pc-condition">ELSE</span>
-        <span class="pc-comment">// Jika laporan tidak ditemukan atau perangkat sudah tidak rusak</span>
-        OUTPUT <span class="pc-string">"ERROR: Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span>
-        tampilkanError(<span class="pc-string">"Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span>)
-    <span class="pc-condition">END IF</span>
-
-    <span class="pc-comment">// === SELESAI ===</span>
-    OUTPUT <span class="pc-string">"Proses penyelesaian laporan selesai."</span>
-
+               <span class="pc-comment">// ALGORITMA SistemPenyelesaianLaporan</span><br>
+<span class="pc-comment">// { Menangani penyelesaian laporan kerusakan perangkat lab dengan pendekatan OOP }</span><br>
+<span class="pc-keyword">DEKLARASI</span><br>
+&nbsp;&nbsp;<span class="pc-comment">// Tipe bentukan untuk objek Laporan</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-var">Laporan</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idLaporan : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idPerangkat : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> deskripsi : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggal : date<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> pelapor : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggalSelesai : datetime<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> isSukses : boolean<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Konstruktor (Proses OOP: Membuat objek)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggal &lt;- tanggal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.pelapor &lt;- pelapor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idLaporan &lt;- generateUniqueID()   <span class="pc-comment">// Proses: generate ID otomatis</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>            <span class="pc-comment">// Proses: set status awal</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()  <span class="pc-comment">// Proses: catat waktu</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggalSelesai &lt;- null<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.isSukses &lt;- <span class="pc-keyword">FALSE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Menyelesaikan laporan</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">selesaikan</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Selesai"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggalSelesai &lt;- currentDateTime()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.isSukses &lt;- <span class="pc-keyword">TRUE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Mengubah status laporan</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">updateStatus</span>(statusBaru)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- statusBaru<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Fungsi untuk mendapatkan ID laporan (Output)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getId</span>() -> string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">END CLASS</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// Tipe bentukan untuk objek Pelapor</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-var">Pelapor</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> nama : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> daftarLaporanAktif : array of Laporan<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(nama)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.nama &lt;- nama<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.daftarLaporanAktif &lt;- []<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Menambahkan laporan ke daftar aktif</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">tambahLaporan</span>(laporan)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.daftarLaporanAktif.push(laporan)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Menghapus laporan dari daftar aktif</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">hapusLaporanAktif</span>(laporan)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">FOR</span> i FROM 0 TO <span class="pc-keyword">this</span>.daftarLaporanAktif.length - 1 <span class="pc-keyword">DO</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> <span class="pc-keyword">this</span>.daftarLaporanAktif[i] == laporan <span class="pc-condition">THEN</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.daftarLaporanAktif.splice(i, 1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">BREAK</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END FOR</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Fungsi untuk mendapatkan daftar laporan aktif (Output)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getDaftarLaporan</span>() -> array of Laporan<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.daftarLaporanAktif<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">END CLASS</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// Tipe bentukan untuk objek Perangkat</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-var">Perangkat</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> id : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> nama : string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string   <span class="pc-comment">// 'Tersedia' atau 'Rusak'</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(id, nama, status)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.id &lt;- id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.nama &lt;- nama<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- status<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Menandai perangkat sebagai selesai diperbaiki</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">selesaikan</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Tersedia"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Fungsi untuk mendapatkan status (Output)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getStatus</span>() -> string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.status<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">END CLASS</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// Variabel global untuk simulasi</span><br>
+&nbsp;&nbsp;daftarPelapor : array of Pelapor<br>
+&nbsp;&nbsp;daftarPerangkat : array of Perangkat<br>
+&nbsp;&nbsp;laporanDitemukan : Laporan<br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// Variabel untuk input</span><br>
+&nbsp;&nbsp;pilihanPelapor : string<br>
+&nbsp;&nbsp;pilihanPerangkat : string<br>
+&nbsp;&nbsp;dataValid : boolean<br>
+<br>
+<span class="pc-keyword">ALGORITMA UTAMA</span><br>
+&nbsp;&nbsp;<span class="pc-comment">// === MULAI ===</span><br>
+&nbsp;&nbsp;OUTPUT <span class="pc-string">"=== SISTEM PENYELESAIAN LAPORAN KERUSAKAN PERANGKAT LAB ==="</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// === 1. INPUT (dengan validasi) ===</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">REPEAT</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Nama Pelapor : "</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;INPUT pilihanPelapor<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan ID Perangkat Rusak : "</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;INPUT pilihanPerangkat<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses Validasi: pastikan pelapor dan perangkat ada</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pelapor &lt;- cariPelapor(pilihanPelapor)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;perangkat &lt;- cariPerangkat(pilihanPerangkat)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> (pelapor == null OR perangkat == null) <span class="pc-condition">THEN</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataValid &lt;- <span class="pc-keyword">FALSE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Pelapor atau perangkat tidak ditemukan!"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataValid &lt;- <span class="pc-keyword">TRUE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">UNTIL</span> (dataValid == <span class="pc-keyword">TRUE</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// === 2. PROSES: Mencari Laporan yang Tepat ===</span><br>
+&nbsp;&nbsp;laporanDitemukan &lt;- null<br>
+&nbsp;&nbsp;<span class="pc-keyword">FOR</span> each laporan IN pelapor.daftarLaporanAktif <span class="pc-keyword">DO</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> laporan.idPerangkat == perangkat.id <span class="pc-condition">THEN</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporanDitemukan &lt;- laporan<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">BREAK</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+&nbsp;&nbsp;<span class="pc-keyword">END FOR</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// === 3. VALIDASI & EKSEKUSI ===</span><br>
+&nbsp;&nbsp;<span class="pc-condition">IF</span> (laporanDitemukan != null AND perangkat.status == <span class="pc-string">"Rusak"</span>) <span class="pc-condition">THEN</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// A. Perbaiki Perangkat (ubah status)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;perangkat.selesaikan()<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// B. Tandai Laporan Selesai</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;laporanDitemukan.selesaikan()<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// C. Hapus dari daftar aktif pelapor</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pelapor.hapusLaporanAktif(laporanDitemukan)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === 4. OUTPUT ===</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"----------------------------------------------"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"SUKSES! Laporan kerusakan telah selesai diperbaiki."</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ID Laporan      : "</span> + laporanDitemukan.getId()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Status          : Selesai"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Tanggal Selesai : "</span> + laporanDitemukan.tanggalSelesai<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"----------------------------------------------"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Nota perbaikan telah dicetak."</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cetakNota(laporanDitemukan)   <span class="pc-comment">// Proses cetak nota</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Jika laporan tidak ditemukan atau perangkat sudah tidak rusak</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tampilkanError(<span class="pc-string">"Laporan tidak ditemukan atau perangkat sudah diperbaiki."</span>)<br>
+&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+<br>
+&nbsp;&nbsp;<span class="pc-comment">// === SELESAI ===</span><br>
+&nbsp;&nbsp;OUTPUT <span class="pc-string">"Proses penyelesaian laporan selesai."</span><br>
+<br>
 <span class="pc-keyword">END ALGORITMA</span>
             </div>
         </div>
