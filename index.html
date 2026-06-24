@@ -1162,6 +1162,7 @@
 // { Menangani penyelesaian laporan kerusakan perangkat lab dengan pendekatan OOP }
 
 <span class="pc-keyword">DEKLARASI</span>
+
     <span class="pc-comment">// Tipe bentukan untuk objek Laporan</span>
     <span class="pc-keyword">CLASS</span> <span class="pc-var">Laporan</span>
         <span class="pc-keyword">PRIVATE</span> idLaporan : string
@@ -1270,6 +1271,7 @@
     dataValid : boolean
 
 <span class="pc-keyword">ALGORITMA UTAMA</span>
+
     <span class="pc-comment">// === MULAI ===</span>
     OUTPUT <span class="pc-string">"=== SISTEM PENYELESAIAN LAPORAN KERUSAKAN PERANGKAT LAB ==="</span>
 
@@ -1277,6 +1279,7 @@
     <span class="pc-keyword">REPEAT</span>
         OUTPUT <span class="pc-string">"Masukkan Nama Pelapor : "</span>
         INPUT pilihanPelapor
+
         OUTPUT <span class="pc-string">"Masukkan ID Perangkat Rusak : "</span>
         INPUT pilihanPerangkat
 
@@ -1294,6 +1297,7 @@
 
     <span class="pc-comment">// === 2. PROSES: Mencari Laporan yang Tepat ===</span>
     laporanDitemukan &lt;- null
+
     <span class="pc-keyword">FOR</span> each laporan IN pelapor.daftarLaporanAktif <span class="pc-keyword">DO</span>
         <span class="pc-condition">IF</span> laporan.idPerangkat == perangkat.id <span class="pc-condition">THEN</span>
             laporanDitemukan &lt;- laporan
@@ -1331,6 +1335,7 @@
 
     <span class="pc-comment">// === SELESAI ===</span>
     OUTPUT <span class="pc-string">"Proses penyelesaian laporan selesai."</span>
+
 <span class="pc-keyword">END ALGORITMA</span>
             </div>
         </div>
