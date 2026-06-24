@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studi Kasus: Sistem Pelaporan Kerusakan Perangkat Laboratorium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0b0e14;
+            --bg-secondary: #111820;
+            --bg-card: #141c26;
+            --border-color: #2a3a4a;
+            --text-primary: #e8edf5;
+            --text-dim: #8a9aa8;
+            --text-muted: #5a6a78;
+            --accent-blue: #4a9eff;
+            --accent-cyan: #00d4ff;
+            --accent-green: #00e676;
+            --accent-orange: #ffa726;
+            --accent-red: #ff5252;
+            --accent-light-red: #ff8a80;
+            --accent-purple: #b388ff;
+            --font-sans: 'Outfit', 'Inter', sans-serif;
+            --font-mono: 'Fira Code', 'Share Tech Mono', monospace;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --radius: 12px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1360px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .gerakan {
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            background: rgba(0, 212, 255, 0.06);
+            display: inline-block;
+            padding: 4px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            margin-bottom: 14px;
+        }
+
+        .info-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 36px;
+            font-size: 15px;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+        }
+        .info-bar b {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .session-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+        }
+        .session-title span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cyber-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 28px 30px 34px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 40px;
+            transition: border-color var(--transition);
+        }
+        .cyber-card:hover {
+            border-color: rgba(74, 158, 255, 0.25);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+            color: var(--text-primary);
+        }
+        .card-title span {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .form-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dim);
+            letter-spacing: 0.3px;
+        }
+
+        .add-customer-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 16px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 180px;
+            gap: 4px;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        .form-input {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-sans);
+            transition: border var(--transition);
+            outline: none;
+            width: 100%;
+        }
+        .form-input:focus {
+            border-color: var(--accent-blue);
+        }
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font-sans);
+            background: var(--accent-blue);
+            color: #fff;
+        }
+        .form-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+        }
+        .form-btn.add-btn {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .customer-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .cust-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-align: left;
+            min-width: 140px;
+            flex: 1 0 auto;
+            max-width: 220px;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+        }
+        .cust-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(74, 158, 255, 0.06);
+        }
+        .cust-btn.active {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.08);
+        }
+        .cust-btn .cust-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .cust-btn .cust-meta {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+        .cust-btn .cust-status-badge {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--accent-green);
+            margin-top: 4px;
+            background: rgba(0, 230, 118, 0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .cust-btn .cust-status-badge.has-report {
+            color: var(--accent-orange);
+            background: rgba(255, 167, 38, 0.10);
+        }
+
+        .vehicle-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .vehicle-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 18px 18px 16px;
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .vehicle-card:hover {
+            border-color: rgba(74, 158, 255, 0.2);
+        }
+        .vehicle-card.rented {
+            border-left: 4px solid var(--accent-orange);
+        }
+        .vehicle-card .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .vehicle-card .vehicle-type {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+        .vehicle-card .vehicle-plat {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+        .vehicle-card .vehicle-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 4px 0 2px;
+        }
+        .vehicle-card .vehicle-desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .vehicle-card .vehicle-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .vehicle-card .vehicle-specs .spec-item {
+            display: flex;
+            gap: 6px;
+            color: var(--text-dim);
+        }
+        .vehicle-card .vehicle-specs .spec-item span:last-child {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .vehicle-card .vehicle-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        .vehicle-card .price-tag {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        .vehicle-card .price-tag b {
+            color: var(--text-primary);
+        }
+
+        .btn-action {
+            padding: 6px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font-sans);
+            background: var(--accent-blue);
+            color: #fff;
+        }
+        .btn-action:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 18px rgba(74, 158, 255, 0.25);
+        }
+        .btn-action.return {
+            background: var(--accent-orange);
+        }
+        .btn-action.return:hover {
+            box-shadow: 0 0 18px rgba(255, 167, 38, 0.25);
+        }
+        .btn-action:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .terminal {
+            background: #0a0e14;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px 14px;
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .terminal .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .terminal .terminal-header .dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .terminal .terminal-header .dots span:nth-child(1) {
+            background: #ff5f56;
+        }
+        .terminal .terminal-header .dots span:nth-child(2) {
+            background: #ffbd2e;
+        }
+        .terminal .terminal-header .dots span:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .terminal .terminal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .terminal .terminal-line {
+            padding: 2px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .terminal .terminal-line.system {
+            color: var(--accent-cyan);
+        }
+        .terminal .terminal-line.info {
+            color: var(--text-dim);
+        }
+        .terminal .terminal-line.success {
+            color: var(--accent-green);
+        }
+        .terminal .terminal-line.error {
+            color: var(--accent-red);
+        }
+        .terminal .terminal-line.warning {
+            color: var(--accent-orange);
+        }
+
+        .dart-code-container {
+            background: #0a0e14;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px 14px;
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .dart-code-container pre {
+            margin: 0;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+        .dart-code-container .comment {
+            color: var(--text-muted);
+        }
+        .dart-code-container .keyword {
+            color: var(--accent-cyan);
+        }
+        .dart-code-container .string {
+            color: var(--accent-green);
+        }
+        .dart-code-container .class-name {
+            color: var(--accent-orange);
+        }
+        .dart-code-container .function {
+            color: var(--accent-blue);
+        }
+
+        .explanation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin: 24px 0 20px;
+        }
+
+        .explain-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 22px 20px 24px;
+            transition: border var(--transition);
+        }
+        .explain-card:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+        .explain-card .explain-icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+        .explain-card .explain-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .explain-card .explain-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .explain-card .explain-desc code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--accent-cyan);
+        }
+
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .diag-tab-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition);
+            color: var(--text-dim);
+            font-family: var(--font-sans);
+        }
+        .diag-tab-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+        .diag-tab-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #fff;
+        }
+        .diag-tab-content {
+            display: none;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+        }
+        .diag-tab-content.active {
+            display: block;
+        }
+        .diag-tab-content .mermaid-container {
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        .diag-tab-content .mermaid-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Box untuk gambar */
+        .image-box {
+            background: #0a0e14;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Gaya untuk gambar di dalam box */
+        .gambar-box {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .pseudocode-box {
+            background: #0a0e14;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-top: 18px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-primary);
+            overflow-x: auto;
+        }
+        .pseudocode-box .pc-comment {
+            color: var(--text-muted);
+        }
+        .pseudocode-box .pc-keyword {
+            color: var(--accent-cyan);
+        }
+        .pseudocode-box .pc-string {
+            color: var(--accent-green);
+        }
+        .pseudocode-box .pc-var {
+            color: var(--accent-orange);
+        }
+        .pseudocode-box .pc-func {
+            color: var(--accent-blue);
+        }
+        .pseudocode-box .pc-condition {
+            color: var(--accent-purple);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 6px;
+            }
+            .cyber-card {
+                padding: 18px 14px 22px;
+            }
+            .add-customer-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .customer-selector {
+                gap: 6px;
+            }
+            .cust-btn {
+                min-width: 100px;
+                flex: 1 1 120px;
+                padding: 8px 12px;
+            }
+            .vehicle-list {
+                grid-template-columns: 1fr;
+            }
+            .session-title {
+                font-size: 22px;
+            }
+            .info-bar {
+                font-size: 13px;
+                gap: 8px 16px;
+            }
+            .explanation-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs-container {
+                flex-direction: column;
+            }
+            .diag-tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px 6px;
+            }
+            .vehicle-card .vehicle-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            .btn-action {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="gerakan">SISTEM PELAPORAN KERUSAKAN PERANGKAT LABORATORIUM</div>
+        <div class="info-bar">
+            <span>ANGGOTA 1: <b>M. Bagas Khoirullah</b> (NIM: 251410016)</span>
+            <span>ANGGOTA 2: <b>Muhammad Bagas Putra Andeza</b></span>
+            <span>KELAS: <b>SI2A</b></span>
+        </div>
+        <h1 class="session-title">STUDI KASUS: <span>Sistem Pelaporan Kerusakan Perangkat Laboratorium (OOP)</span></h1>
+    </header>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="cyber-card">
+        <div class="card-title"><span>SIMULATOR</span> DASHBOARD PELAPORAN KERUSAKAN</div>
+        <p style="margin-bottom: 22px; color: var(--text-dim);">
+            Daftarkan pelapor baru melalui form input atau pilih salah satu pelapor aktif di bawah.
+            Klik tombol <b>LAPORKAN</b> pada perangkat yang tersedia (maksimal laporan aktif adalah <b>2 perangkat</b> per pelapor).
+            Klik tombol <b>SELESAIKAN</b> untuk memproses perbaikan perangkat serta mencetak <b>nota laporan</b>.
+        </p>
+
+        <h4 class="form-label" style="margin-bottom: 10px;">Tambah Pelapor Baru:</h4>
+        <div class="add-customer-form">
+            <div class="form-group">
+                <label for="new-cust-name">Nama Lengkap</label>
+                <input type="text" id="new-cust-name" class="form-input" placeholder="Nama pelapor..." />
+            </div>
+            <div class="form-group">
+                <label for="new-cust-nik">NIK Pelapor</label>
+                <input type="text" id="new-cust-nik" class="form-input" placeholder="NIK (16 digit)..." />
+            </div>
+            <button class="form-btn add-btn" onclick="addNewCustomer()">Tambah</button>
+        </div>
+
+        <h4 class="form-label" style="margin-bottom: 10px;">Pilih Pelapor Aktif:</h4>
+        <div class="customer-selector" id="customer-list-container"></div>
+
+        <h4 class="form-label" style="margin-bottom: 15px;">Daftar Perangkat Laboratorium:</h4>
+        <div class="vehicle-list" id="vehicle-list-container"></div>
+    </div>
+
+    <!-- ===== TERMINAL CONSOLE ===== -->
+    <div class="cyber-card" style="margin-bottom: 40px;">
+        <div class="card-title"><span>TERMINAL</span> VIRTUAL CONSOLE DART</div>
+        <div class="terminal" id="terminal">
+            <div class="terminal-header">
+                <span>dart console — sistem_pelaporan.dart</span>
+                <div class="dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="terminal-body" id="log-body"></div>
+        </div>
+    </div>
+
+    <!-- ===== KODE DART CLASS ===== -->
+    <div class="cyber-card" style="margin-bottom: 40px;">
+        <div class="card-title"><span>KODE DART</span> CLASS OOP</div>
+        <div class="dart-code-container">
+            <pre>
+<span class="comment">// ============================================================</span>
+<span class="comment">// Nama Anggota Kelompok:</span>
+<span class="comment">// 1. M. Bagas Khoirullah (NIM: 251410016)</span>
+<span class="comment">// 2. Muhammad Bagas Putra Andeza</span>
+<span class="comment">// Topik: Sistem Pelaporan Kerusakan Perangkat Laboratorium</span>
+<span class="comment">//        (Penerapan Bab 10 OOP)</span>
+<span class="comment">// ============================================================</span>
+
+<span class="keyword">import</span> <span class="string">'dart:core'</span>;
+
+<span class="comment">// ---------- Kelas Induk ----------</span>
+<span class="keyword">class</span> <span class="class-name">Perangkat</span> {
+  <span class="keyword">String</span> kodeInventaris;
+  <span class="keyword">String</span> nama;
+  <span class="keyword">String</span> _status;
+  <span class="keyword">String</span>? _pelaporAktif;
+
+  <span class="class-name">Perangkat</span>(<span class="keyword">this</span>.kodeInventaris, <span class="keyword">this</span>.nama, <span class="keyword">this</span>._status) {
+    _pelaporAktif = <span class="keyword">null</span>;
+  }
+
+  <span class="keyword">String</span> get status => _status;
+  <span class="keyword">String</span>? get pelaporAktif => _pelaporAktif;
+
+  <span class="keyword">bool</span> <span class="function">laporkan</span>(<span class="keyword">String</span> namaPelapor) {
+    <span class="keyword">if</span> (_status == <span class="string">'Tersedia'</span>) {
+      _status = <span class="string">'Rusak'</span>;
+      _pelaporAktif = namaPelapor;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">false</span>;
+  }
+
+  <span class="keyword">bool</span> <span class="function">selesaikan</span>() {
+    <span class="keyword">if</span> (_status == <span class="string">'Rusak'</span> || _status == <span class="string">'Dalam Perbaikan'</span>) {
+      _status = <span class="string">'Tersedia'</span>;
+      _pelaporAktif = <span class="keyword">null</span>;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">false</span>;
+  }
+
+  <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
+    print(<span class="string">'Kode Inventaris: $kodeInventaris'</span>);
+    print(<span class="string">'Nama Perangkat : $nama'</span>);
+    print(<span class="string">'Status         : $_status'</span>);
+    <span class="keyword">if</span> (_pelaporAktif != <span class="keyword">null</span>) {
+      print(<span class="string">'Pelapor        : $_pelaporAktif'</span>);
+    }
+  }
+}
+
+<span class="comment">// ---------- Kelas Turunan ----------</span>
+<span class="keyword">class</span> <span class="class-name">Komputer</span> <span class="keyword">extends</span> <span class="class-name">Perangkat</span> {
+  <span class="keyword">String</span> spesifikasi;
+  <span class="keyword">int</span> ramGB;
+  <span class="class-name">Komputer</span>(<span class="keyword">String</span> kode, <span class="keyword">String</span> nama, <span class="keyword">String</span> status, <span class="keyword">this</span>.spesifikasi, <span class="keyword">this</span>.ramGB)
+      : <span class="keyword">super</span>(kode, nama, status);
+  @<span class="keyword">override</span> <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
+    print(<span class="string">'--- [Info Komputer] ---'</span>);
+    <span class="keyword">super</span>.tampilkanInfo();
+    print(<span class="string">'Spesifikasi : $spesifikasi'</span>);
+    print(<span class="string">'RAM         : $ramGB GB'</span>);
+  }
+}
+
+<span class="keyword">class</span> <span class="class-name">Proyektor</span> <span class="keyword">extends</span> <span class="class-name">Perangkat</span> {
+  <span class="keyword">int</span> lumen;
+  <span class="keyword">String</span> resolusi;
+  <span class="class-name">Proyektor</span>(<span class="keyword">String</span> kode, <span class="keyword">String</span> nama, <span class="keyword">String</span> status, <span class="keyword">this</span>.lumen, <span class="keyword">this</span>.resolusi)
+      : <span class="keyword">super</span>(kode, nama, status);
+  @<span class="keyword">override</span> <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
+    print(<span class="string">'--- [Info Proyektor] ---'</span>);
+    <span class="keyword">super</span>.tampilkanInfo();
+    print(<span class="string">'Lumen       : $lumen'</span>);
+    print(<span class="string">'Resolusi    : $resolusi'</span>);
+  }
+}
+
+<span class="keyword">class</span> <span class="class-name">Printer</span> <span class="keyword">extends</span> <span class="class-name">Perangkat</span> {
+  <span class="keyword">String</span> tipe;
+  <span class="keyword">int</span> kecepatanPpm;
+  <span class="class-name">Printer</span>(<span class="keyword">String</span> kode, <span class="keyword">String</span> nama, <span class="keyword">String</span> status, <span class="keyword">this</span>.tipe, <span class="keyword">this</span>.kecepatanPpm)
+      : <span class="keyword">super</span>(kode, nama, status);
+  @<span class="keyword">override</span> <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
+    print(<span class="string">'--- [Info Printer] ---'</span>);
+    <span class="keyword">super</span>.tampilkanInfo();
+    print(<span class="string">'Tipe        : $tipe'</span>);
+    print(<span class="string">'Kecepatan   : $kecepatanPpm ppm'</span>);
+  }
+}
+
+<span class="comment">// ---------- Kelas Pelapor ----------</span>
+<span class="keyword">class</span> <span class="class-name">Pelapor</span> {
+  <span class="keyword">String</span> nama;
+  <span class="keyword">String</span> nik;
+  <span class="keyword">int</span> _jumlahLaporanAktif = <span class="keyword">0</span>;
+  <span class="keyword">List</span><<span class="keyword">String</span>> _laporanAktif = [];
+
+  <span class="class-name">Pelapor</span>(<span class="keyword">this</span>.nama, <span class="keyword">this</span>.nik);
+
+  <span class="keyword">int</span> get jumlahLaporanAktif => _jumlahLaporanAktif;
+  <span class="keyword">List</span><<span class="keyword">String</span>> get laporanAktif => <span class="keyword">List</span>.unmodifiable(_laporanAktif);
+
+  <span class="keyword">Map</span><<span class="keyword">String</span>, <span class="keyword">dynamic</span>> <span class="function">buatLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
+    <span class="keyword">if</span> (_jumlahLaporanAktif >= <span class="keyword">2</span>) {
+      <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Batas maksimal 2 laporan aktif per pelapor.'</span>};
+    }
+    <span class="keyword">if</span> (perangkat.status != <span class="string">'Tersedia'</span>) {
+      <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} sedang tidak tersedia.'</span>};
+    }
+    <span class="keyword">bool</span> berhasil = perangkat.laporkan(<span class="keyword">this</span>.nama);
+    <span class="keyword">if</span> (berhasil) {
+      _jumlahLaporanAktif++;
+      _laporanAktif.add(perangkat.kodeInventaris);
+      <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">true</span>, <span class="string">'message'</span>: <span class="string">'Laporan berhasil! $nama melaporkan ${perangkat.nama}.'</span>};
+    }
+    <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Gagal melaporkan perangkat.'</span>};
+  }
+
+  <span class="keyword">Map</span><<span class="keyword">String</span>, <span class="keyword">dynamic</span>> <span class="function">selesaikanLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
+    <span class="keyword">if</span> (perangkat.status == <span class="string">'Rusak'</span> || perangkat.status == <span class="string">'Dalam Perbaikan'</span>) {
+      <span class="keyword">int</span> idx = _laporanAktif.indexOf(perangkat.kodeInventaris);
+      <span class="keyword">if</span> (idx != -<span class="keyword">1</span>) {
+        _laporanAktif.removeAt(idx);
+        _jumlahLaporanAktif--;
+      }
+      <span class="keyword">bool</span> berhasil = perangkat.selesaikan();
+      <span class="keyword">if</span> (berhasil) {
+        <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">true</span>, <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} telah diperbaiki.'</span>};
+      }
+    }
+    <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} tidak dalam status rusak.'</span>};
+  }
+
+  <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
+    print(<span class="string">'Nama Pelapor  : $nama'</span>);
+    print(<span class="string">'NIK           : $nik'</span>);
+    print(<span class="string">'Laporan Aktif : $_jumlahLaporanAktif perangkat'</span>);
+    <span class="keyword">if</span> (_laporanAktif.isNotEmpty) {
+      print(<span class="string">'Daftar kode   : ${_laporanAktif.join(', ')}'</span>);
+    }
+  }
+}
+
+<span class="comment">// ---------- Kelas LaporanKerusakan ----------</span>
+<span class="keyword">class</span> <span class="class-name">LaporanKerusakan</span> {
+  <span class="keyword">String</span> idLaporan;
+  <span class="class-name">Pelapor</span> pelapor;
+  <span class="class-name">Perangkat</span> perangkat;
+  <span class="keyword">DateTime</span> tanggalLapor;
+  <span class="keyword">DateTime</span>? tanggalSelesai;
+  <span class="keyword">String</span> deskripsi;
+  <span class="keyword">bool</span> isSukses = <span class="keyword">false</span>;
+
+  <span class="class-name">LaporanKerusakan</span>(<span class="keyword">this</span>.idLaporan, <span class="keyword">this</span>.pelapor, <span class="keyword">this</span>.perangkat, <span class="keyword">this</span>.deskripsi)
+      : tanggalLapor = <span class="class-name">DateTime</span>.now();
+
+  <span class="keyword">void</span> <span class="function">selesaikanLaporan</span>() {
+    tanggalSelesai = <span class="class-name">DateTime</span>.now();
+    isSukses = <span class="keyword">true</span>;
+  }
+
+  <span class="keyword">void</span> <span class="function">tampilkanDetail</span>() {
+    <span class="keyword">String</span> tglLapor = tanggalLapor.toLocal().toString().split(<span class="string">' '</span>)[<span class="keyword">0</span>];
+    <span class="keyword">String</span> tglSelesai = tanggalSelesai != <span class="keyword">null</span>
+        ? tanggalSelesai!.toLocal().toString().split(<span class="string">' '</span>)[<span class="keyword">0</span>]
+        : <span class="string">'Belum selesai'</span>;
+    print(<span class="string">'=================================================='</span>);
+    print(<span class="string">'          NOTA LAPORAN KERUSAKAN PERANGKAT         '</span>);
+    print(<span class="string">'=================================================='</span>);
+    print(<span class="string">'ID Laporan   : $idLaporan'</span>);
+    print(<span class="string">'Pelapor      : ${pelapor.nama} (${pelapor.nik})'</span>);
+    print(<span class="string">'Perangkat    : ${perangkat.nama} [${perangkat.kodeInventaris}]'</span>);
+    print(<span class="string">'Tanggal Lapor: $tglLapor'</span>);
+    print(<span class="string">'Tanggal Selesai: $tglSelesai'</span>);
+    print(<span class="string">'Deskripsi    : ${deskripsi.isNotEmpty ? deskripsi : '-'}'</span>);
+    print(<span class="string">'Status       : ${isSukses ? 'SELESAI ✅' : 'AKTIF ⏳'}'</span>);
+    print(<span class="string">'=================================================='</span>);
+  }
+}
+            </pre>
+        </div>
+    </div>
+
+    <!-- ===== OOP EXPLANATION ===== -->
+    <div class="session-title" style="margin-top: 20px;">Penerapan Pilar <span>OOP (Object Oriented Programming)</span></div>
+    <div class="explanation-grid">
+        <div class="explain-card">
+            <div class="explain-icon">📦</div>
+            <div class="explain-title">1. Enkapsulasi</div>
+            <div class="explain-desc">
+                Status internal <code>status</code> pada perangkat disembunyikan dan hanya dapat diubah secara aman lewat
+                metode <code>laporkan()</code> dan <code>selesaikan()</code>.
+            </div>
+        </div>
+        <div class="explain-card">
+            <div class="explain-icon">🧬</div>
+            <div class="explain-title">2. Pewarisan (Inheritance)</div>
+            <div class="explain-desc">
+                Kelas <code>Komputer</code>, <code>Proyektor</code>, dan <code>Printer</code> mewarisi dari <code>Perangkat</code>.
+            </div>
+        </div>
+        <div class="explain-card">
+            <div class="explain-icon">🎭</div>
+            <div class="explain-title">3. Polimorfisme</div>
+            <div class="explain-desc">
+                Metode <code>tampilkanInfo()</code> di-override di setiap kelas turunan.
+            </div>
+        </div>
+        <div class="explain-card">
+            <div class="explain-icon">🤝</div>
+            <div class="explain-title">4. Interaksi Objek</div>
+            <div class="explain-desc">
+                Objek <code>Pelapor</code> berinteraksi dengan <code>Perangkat</code> melalui <code>LaporanKerusakan</code>.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LOGIKA & DIAGRAM SISTEM ===== -->
+    <div class="session-title" style="margin-top: 60px;">LOGIKA &amp; DIAGRAM <span>SISTEM</span></div>
+    <div class="cyber-card" style="margin-bottom: 50px;">
+        <div class="card-title"><span>SYSTEM_DIAGRAMS</span> VISUALISASI LOGIKA OOP &amp; ALUR KERJA</div>
+
+        <div class="tabs-container">
+            <button class="diag-tab-btn active" onclick="switchDiagramTab(event, 'diag-class')">DIAGRAM CLASS</button>
+            <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-report')">ALGORITMA PELAPORAN</button>
+            <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-resolve')">ALGORITMA PENYELESAIAN</button>
+            <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-ipo')">FLOWCHART IPO</button>
+        </div>
+
+        <!-- Tab Diagram Class -->
+        <div class="diag-tab-content active" id="diag-class">
+            <p style="margin-bottom: 20px; color: var(--text-dim);">
+                Diagram class dengan atribut lengkap (minimal 4 per kelas) dan relasi antar kelas.
+            </p>
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    classDiagram
+                        class Perangkat {
+                            -String kodeInventaris
+                            -String nama
+                            -String status
+                            -String lokasi
+                            -int tahunPerolehan
+                            +tampilkanInfo()
+                            +laporkan()
+                            +selesaikan()
+                        }
+                        class Komputer {
+                            -String spesifikasi
+                            -int ramGB
+                            -String prosesor
+                            -String storage
+                            +tampilkanInfo()
+                        }
+                        class Proyektor {
+                            -int lumen
+                            -String resolusi
+                            -int kontras
+                            -double berat
+                            +tampilkanInfo()
+                        }
+                        class Printer {
+                            -String tipe
+                            -int kecepatanPpm
+                            -int dpi
+                            -int kapasitasKertas
+                            +tampilkanInfo()
+                        }
+                        class Pelapor {
+                            -String nama
+                            -String nik
+                            -String email
+                            -String noTelepon
+                            -String alamat
+                            +tampilkanInfo()
+                            +buatLaporan()
+                        }
+                        class LaporanKerusakan {
+                            -String idLaporan
+                            -String deskripsi
+                            -String prioritas
+                            -String statusLaporan
+                            -DateTime tanggalLapor
+                            -DateTime? tanggalSelesai
+                            +tampilkanDetail()
+                            +selesaikanLaporan()
+                        }
+                        Perangkat <|-- Komputer
+                        Perangkat <|-- Proyektor
+                        Perangkat <|-- Printer
+                        LaporanKerusakan --> Pelapor : 1..* &lt;--&gt; 1
+                        LaporanKerusakan --> Perangkat : 1..* &lt;--&gt; 1
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB ALGORITMA PELAPORAN (dengan gambar asli) ===== -->
+        <div class="diag-tab-content" id="diag-report">
+            <p style="margin-bottom: 20px; color: var(--text-dim);">
+                Flowchart dan pseudocode untuk alur pelaporan kerusakan perangkat laboratorium.
+            </p>
+
+            <!-- Box Gambar -->
+            <div class="image-box">
+                <img src="deepseek_mermaid_20260622_94dfcf.png" class="gambar-box" alt="Flowchart Algoritma Pelaporan" />
+            </div>
+
+            <!-- Box Pseudocode -->
+            <div class="pseudocode-box">
+                <span class="pc-comment">// ALGORITMA SistemPelaporanKerusakan</span><br>
+                <span class="pc-comment">// { Menangani pelaporan kerusakan perangkat lab dengan pendekatan OOP }</span><br>
+                <span class="pc-keyword">DEKLARASI</span><br>
+                &nbsp;&nbsp;<span class="pc-comment">// Tipe bentukan untuk objek Laporan</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-var">Laporan</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idLaporan : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idPerangkat : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> deskripsi : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggal : date<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> pelapor : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Konstruktor (Proses OOP: Membuat objek)</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggal &lt;- tanggal<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.pelapor &lt;- pelapor<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idLaporan &lt;- generateUniqueID()   <span class="pc-comment">// Proses: generate ID otomatis</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>            <span class="pc-comment">// Proses: set status awal</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()  <span class="pc-comment">// Proses: catat waktu</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Menyimpan objek ke basis data (simulasi)</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">simpan</span>()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database.tambahLaporan(<span class="pc-keyword">this</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses: Mengubah status laporan</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">updateStatus</span>(statusBaru)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- statusBaru<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Fungsi untuk mendapatkan ID laporan (Output)</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getID</span>() -> string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">END CLASS</span><br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// Variabel global untuk simulasi database</span><br>
+                &nbsp;&nbsp;database : array of Laporan<br>
+                &nbsp;&nbsp;laporanBaru : Laporan<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// Variabel untuk input</span><br>
+                &nbsp;&nbsp;input_idPerangkat : string<br>
+                &nbsp;&nbsp;input_deskripsi : string<br>
+                &nbsp;&nbsp;input_tanggal : date<br>
+                &nbsp;&nbsp;input_pelapor : string<br>
+                &nbsp;&nbsp;dataLengkap : boolean<br>
+                <br>
+                <span class="pc-keyword">ALGORITMA UTAMA</span><br>
+                &nbsp;&nbsp;<span class="pc-comment">// === MULAI ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"=== SISTEM PELAPORAN KERUSAKAN PERANGKAT LAB ==="</span><br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// === INPUT (dengan validasi/perulangan) ===</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">REPEAT</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan ID Perangkat    : "</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;INPUT input_idPerangkat<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Deskripsi Kerusakan : "</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;INPUT input_deskripsi<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Tanggal Kejadian (YYYY-MM-DD) : "</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;INPUT input_tanggal<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Nama Pelapor    : "</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;INPUT input_pelapor<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Proses Validasi</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> (input_idPerangkat == <span class="pc-string">""</span> OR input_deskripsi == <span class="pc-string">""</span> OR<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input_tanggal == <span class="pc-string">""</span> OR input_pelapor == <span class="pc-string">""</span>) <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataLengkap &lt;- <span class="pc-keyword">FALSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Data tidak lengkap! Silakan isi semua field."</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataLengkap &lt;- <span class="pc-keyword">TRUE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">UNTIL</span> (dataLengkap == <span class="pc-keyword">TRUE</span>)<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// === PROSES UTAMA (OOP) ===</span><br>
+                &nbsp;&nbsp;<span class="pc-comment">// 1. Membuat objek Laporan dari input</span><br>
+                &nbsp;&nbsp;laporanBaru &lt;- <span class="pc-keyword">NEW</span> Laporan(input_idPerangkat, input_deskripsi,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input_tanggal, input_pelapor)<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// 2. Menyimpan objek ke database</span><br>
+                &nbsp;&nbsp;laporanBaru.simpan()<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// 3. Update status (opsional, karena konstruktor sudah set "Dilaporkan")</span><br>
+                &nbsp;&nbsp;laporanBaru.updateStatus(<span class="pc-string">"Dilaporkan"</span>)<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// === OUTPUT ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"----------------------------------------------"</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"SUKSES! Laporan kerusakan telah dibuat."</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"ID Laporan      : "</span> + laporanBaru.getID()<br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"Status          : Dilaporkan"</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"Waktu Pelaporan : "</span> + laporanBaru.waktuDibuat<br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"----------------------------------------------"</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"Terima kasih, laporan akan segera diproses."</span><br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-comment">// === SELESAI ===</span><br>
+                <span class="pc-keyword">END ALGORITMA</span>
+            </div>
+        </div>
+
+        <!-- Tab Algoritma Penyelesaian -->
+        <div class="diag-tab-content" id="diag-resolve">
+            <p style="margin-bottom: 20px; color: var(--text-dim);">
+                Flowchart dan pseudocode untuk alur penyelesaian (perbaikan) laporan kerusakan.
+            </p>
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[Mulai] --> B[Pelapor memilih perangkat rusak]
+                        B --> C{Status == 'Rusak'?}
+                        C -- Ya --> D[Hapus dari daftar pelapor]
+                        D --> E[Panggil metode selesaikan()]
+                        E --> F[Status = TERSEDIA]
+                        F --> G[Tandai laporan selesai]
+                        G --> H[Catat tanggal selesai]
+                        H --> I[Cetak nota]
+                        I --> J[Selesai]
+                        C -- Tidak --> K[Tampilkan error]
+                        K --> J
+                </div>
+            </div>
+            <div class="pseudocode-box">
+                <span class="pc-comment">// Pseudocode - Algoritma Penyelesaian</span><br>
+                <span class="pc-keyword">START</span><br>
+                &nbsp;&nbsp;<span class="pc-var">pelapor</span> = pilihPelapor()<br>
+                &nbsp;&nbsp;<span class="pc-var">perangkat</span> = pilihPerangkatRusak()<br>
+                &nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Rusak'</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;pelapor.hapusLaporan(perangkat)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;perangkat.selesaikan()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;laporan.tanggalSelesai = <span class="pc-func">now</span>()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;laporan.isSukses = <span class="pc-keyword">true</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;cetakNota(laporan)<br>
+                &nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanError(<span class="pc-string">"Perangkat tidak rusak"</span>)<br>
+                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                <span class="pc-keyword">END</span>
+            </div>
+        </div>
+
+        <!-- Tab Flowchart IPO -->
+        <div class="diag-tab-content" id="diag-ipo">
+            <p style="margin-bottom: 20px; color: var(--text-dim);">
+                Flowchart sistem dengan pembagian jelas antara <strong>Input</strong>, <strong>Processing</strong>, dan <strong>Output</strong>.
+            </p>
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    flowchart TD
+                        subgraph Input
+                            A[Mulai] --> B[Pilih Pelapor]
+                            B --> C[Pilih Perangkat]
+                            C --> D[Pilih Aksi: Laporkan / Selesaikan]
+                        end
+
+                        subgraph Processing
+                            D --> E{Aksi}
+                            E -->|Laporkan| F{Perangkat tersedia?}
+                            F -- Ya --> G[Buat objek LaporanKerusakan]
+                            G --> H[Ubah status = RUSAK]
+                            H --> I[Tambah ke daftar pelapor]
+                            F -- Tidak --> J[Tampilkan error: tidak tersedia]
+
+                            E -->|Selesaikan| K{Status == RUSAK?}
+                            K -- Ya --> L[Hapus dari daftar pelapor]
+                            L --> M[Ubah status = TERSEDIA]
+                            M --> N[Tandai selesai & catat tanggal]
+                            K -- Tidak --> O[Tampilkan error: tidak rusak]
+                        end
+
+                        subgraph Output
+                            I --> P[Tampilkan notifikasi sukses]
+                            P --> Q[Selesai]
+                            J --> Q
+                            N --> R[Cetak nota laporan]
+                            R --> Q
+                            O --> Q
+                        end
+                </div>
+            </div>
+            <div class="pseudocode-box">
+                <span class="pc-comment">// Pseudocode - Flowchart IPO</span><br>
+                <span class="pc-keyword">START</span><br>
+                <span class="pc-comment">// === INPUT ===</span><br>
+                &nbsp;&nbsp;<span class="pc-var">pelapor</span> = pilihPelapor()<br>
+                &nbsp;&nbsp;<span class="pc-var">perangkat</span> = pilihPerangkat()<br>
+                &nbsp;&nbsp;<span class="pc-var">aksi</span> = pilihAksi()<br>
+                <span class="pc-comment">// === PROCESSING ===</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">IF</span> aksi == <span class="pc-string">"Laporkan"</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Tersedia'</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporan = <span class="pc-keyword">new</span> LaporanKerusakan(pelapor, perangkat)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perangkat.laporkan(pelapor.nama)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pelapor.tambahLaporan(perangkat)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error = <span class="pc-string">"Perangkat tidak tersedia"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">ELSE IF</span> aksi == <span class="pc-string">"Selesaikan"</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Rusak'</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pelapor.hapusLaporan(perangkat)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perangkat.selesaikan()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporan.selesaikan()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error = <span class="pc-string">"Perangkat tidak rusak"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                <span class="pc-comment">// === OUTPUT ===</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">IF</span> error == <span class="pc-keyword">null</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanNotifikasi(<span class="pc-string">"Aksi berhasil"</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> aksi == <span class="pc-string">"Selesaikan"</span> <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cetakNota(laporan)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanError(error)<br>
+                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                <span class="pc-keyword">END</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+    // ============================================================
+    //  DATA MODEL (simulasi OOP di JavaScript)
+    // ============================================================
+
+    class Perangkat {
+        constructor(kodeInventaris, nama, status = 'Tersedia', deskripsi = '') {
+            this.kodeInventaris = kodeInventaris;
+            this.nama = nama;
+            this.status = status;
+            this.deskripsi = deskripsi;
+            this.pelaporAktif = null;
+        }
+        tampilkanInfo() {
+            return `Kode: ${this.kodeInventaris} | ${this.nama} | Status: ${this.status}`;
+        }
+        laporkan(pelaporNama) {
+            if (this.status === 'Tersedia') {
+                this.status = 'Rusak';
+                this.pelaporAktif = pelaporNama;
+                return true;
+            }
+            return false;
+        }
+        selesaikan() {
+            if (this.status === 'Rusak' || this.status === 'Dalam Perbaikan') {
+                this.status = 'Tersedia';
+                this.pelaporAktif = null;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    class Komputer extends Perangkat {
+        constructor(kode, nama, status, spesifikasi, ramGB) {
+            super(kode, nama, status);
+            this.spesifikasi = spesifikasi;
+            this.ramGB = ramGB;
+        }
+        tampilkanInfo() {
+            return `${super.tampilkanInfo()} | Spesifikasi: ${this.spesifikasi} | RAM: ${this.ramGB} GB`;
+        }
+    }
+
+    class Proyektor extends Perangkat {
+        constructor(kode, nama, status, lumen, resolusi) {
+            super(kode, nama, status);
+            this.lumen = lumen;
+            this.resolusi = resolusi;
+        }
+        tampilkanInfo() {
+            return `${super.tampilkanInfo()} | Lumen: ${this.lumen} | Resolusi: ${this.resolusi}`;
+        }
+    }
+
+    class Printer extends Perangkat {
+        constructor(kode, nama, status, tipe, kecepatanPpm) {
+            super(kode, nama, status);
+            this.tipe = tipe;
+            this.kecepatanPpm = kecepatanPpm;
+        }
+        tampilkanInfo() {
+            return `${super.tampilkanInfo()} | Tipe: ${this.tipe} | Kecepatan: ${this.kecepatanPpm} ppm`;
+        }
+    }
+
+    class Pelapor {
+        constructor(nama, nik) {
+            this.nama = nama;
+            this.nik = nik;
+            this.jumlahLaporanAktif = 0;
+            this.laporanAktif = [];
+        }
+        tampilkanInfo() {
+            return `Nama: ${this.nama} | NIK: ${this.nik} | Laporan Aktif: ${this.jumlahLaporanAktif}`;
+        }
+        buatLaporan(perangkat) {
+            if (this.jumlahLaporanAktif >= 2) {
+                return { success: false, message: 'Batas maksimal 2 laporan aktif per pelapor.' };
+            }
+            if (perangkat.status !== 'Tersedia') {
+                return { success: false, message: `Perangkat ${perangkat.nama} sedang tidak tersedia.` };
+            }
+            const berhasil = perangkat.laporkan(this.nama);
+            if (berhasil) {
+                this.jumlahLaporanAktif++;
+                this.laporanAktif.push(perangkat.kodeInventaris);
+                return { success: true, message: `Laporan berhasil! ${this.nama} melaporkan ${perangkat.nama}.` };
+            }
+            return { success: false, message: 'Gagal melaporkan perangkat.' };
+        }
+        selesaikanLaporan(perangkat) {
+            if (perangkat.status === 'Rusak' || perangkat.status === 'Dalam Perbaikan') {
+                const idx = this.laporanAktif.indexOf(perangkat.kodeInventaris);
+                if (idx !== -1) {
+                    this.laporanAktif.splice(idx, 1);
+                    this.jumlahLaporanAktif--;
+                }
+                const berhasil = perangkat.selesaikan();
+                if (berhasil) {
+                    return { success: true, message: `Perangkat ${perangkat.nama} telah diperbaiki.` };
+                }
+            }
+            return { success: false, message: `Perangkat ${perangkat.nama} tidak dalam status rusak.` };
+        }
+    }
+
+    class LaporanKerusakan {
+        constructor(idLaporan, pelapor, perangkat, deskripsi = '') {
+            this.idLaporan = idLaporan;
+            this.pelapor = pelapor;
+            this.perangkat = perangkat;
+            this.tanggalLapor = new Date();
+            this.tanggalSelesai = null;
+            this.deskripsi = deskripsi;
+            this.isSukses = false;
+        }
+        selesaikanLaporan() {
+            this.tanggalSelesai = new Date();
+            this.isSukses = true;
+            this.perangkat.selesaikan();
+            const idx = this.pelapor.laporanAktif.indexOf(this.perangkat.kodeInventaris);
+            if (idx !== -1) {
+                this.pelapor.laporanAktif.splice(idx, 1);
+                this.pelapor.jumlahLaporanAktif--;
+            }
+        }
+        tampilkanDetail() {
+            const tgl = this.tanggalLapor.toLocaleString('id-ID');
+            const selesai = this.tanggalSelesai ? this.tanggalSelesai.toLocaleString('id-ID') : 'Belum selesai';
+            return `
+        ==================================================
+          NOTA LAPORAN KERUSAKAN PERANGKAT
+        ==================================================
+        ID Laporan   : ${this.idLaporan}
+        Pelapor      : ${this.pelapor.nama} (${this.pelapor.nik})
+        Perangkat    : ${this.perangkat.nama} (${this.perangkat.kodeInventaris})
+        Tanggal Lapor: ${tgl}
+        Tanggal Selesai: ${selesai}
+        Deskripsi    : ${this.deskripsi || '-'}
+        Status       : ${this.isSukses ? 'SELESAI ✅' : 'AKTIF ⏳'}
+        ==================================================
+        `;
+        }
+    }
+
+    // ============================================================
+    //  INSTANSIASI DATA AWAL
+    // ============================================================
+
+    const daftarPelapor = [
+        new Pelapor('Andi Pratama', '3201010101010001'),
+        new Pelapor('Budi Santoso', '3201010202020002'),
+        new Pelapor('Citra Dewi', '3201010303030003'),
+        new Pelapor('Dian Purnama', '3201010404040004'),
+        new Pelapor('Eka Wijaya', '3201010505050005'),
+        new Pelapor('Fitria Sari', '3201010606060006'),
+        new Pelapor('Gilang Ramadhan', '3201010707070007'),
+        new Pelapor('Hana Maulana', '3201010808080008'),
+        new Pelapor('Indra Kusuma', '3201010909090009'),
+        new Pelapor('Joko Susanto', '3201011010100010'),
+        new Pelapor('Kartika Putri', '3201011111110011'),
+        new Pelapor('Lukman Hakim', '3201011212120012')
+    ];
+
+    const daftarPerangkat = [
+        new Komputer('PC-001', 'Dell OptiPlex 7070', 'Tersedia', 'Intel Core i7, SSD 512GB', 16),
+        new Komputer('PC-002', 'HP ProDesk 600', 'Tersedia', 'Intel Core i5, SSD 256GB', 8),
+        new Proyektor('PRJ-001', 'Epson EB-X05', 'Tersedia', 3200, '1024x768'),
+        new Proyektor('PRJ-002', 'BenQ TH585', 'Tersedia', 3500, '1920x1080'),
+        new Printer('PRT-001', 'HP LaserJet M404', 'Tersedia', 'Laser Mono', 38),
+        new Printer('PRT-002', 'Epson L3210', 'Tersedia', 'Inkjet', 10),
+        new Komputer('PC-003', 'Lenovo ThinkCentre M720', 'Tersedia', 'Intel Core i5, SSD 256GB', 8),
+        new Komputer('PC-004', 'Acer Veriton N4640G', 'Tersedia', 'Intel Celeron, SSD 128GB', 4),
+        new Proyektor('PRJ-003', 'ViewSonic PA503S', 'Tersedia', 3600, '800x600'),
+        new Printer('PRT-003', 'Canon PIXMA G1020', 'Tersedia', 'Inkjet', 8)
+    ];
+
+    let pelaporTerpilih = daftarPelapor[0];
+    let selectedCustomerIndex = 0;
+    let daftarTransaksi = [];
+    let counterLaporan = 1;
+
+    // ============================================================
+    //  RENDER UI
+    // ============================================================
+
+    function renderCustomers() {
+        const container = document.getElementById('customer-list-container');
+        container.innerHTML = '';
+        daftarPelapor.forEach((p, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `cust-btn ${idx === selectedCustomerIndex ? 'active' : ''}`;
+            btn.id = `btn-cust-${idx}`;
+            btn.innerHTML = `
+              <div class="cust-name">${p.nama}</div>
+              <div class="cust-meta">NIK: ${p.nik}</div>
+              <div class="cust-status-badge ${p.jumlahLaporanAktif > 0 ? 'has-report' : ''}">Laporan: ${p.jumlahLaporanAktif}/2 Perangkat</div>
+            `;
+            btn.onclick = () => selectCustomer(idx);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectCustomer(idx) {
+        selectedCustomerIndex = idx;
+        pelaporTerpilih = daftarPelapor[idx];
+        renderCustomers();
+        renderVehicles();
+        appendLog('info', `>>> Pelapor aktif: ${pelaporTerpilih.nama} (${pelaporTerpilih.nik})`);
+    }
+
+    function renderVehicles() {
+        const container = document.getElementById('vehicle-list-container');
+        container.innerHTML = '';
+        daftarPerangkat.forEach((perangkat) => {
+            const isRented = perangkat.status !== 'Tersedia';
+            const card = document.createElement('div');
+            card.className = `vehicle-card ${isRented ? 'rented' : ''}`;
+            card.id = `card-${perangkat.kodeInventaris}`;
+
+            let tipe = 'Perangkat';
+            let spec1 = '', spec2 = '';
+            if (perangkat instanceof Komputer) {
+                tipe = 'KOMPUTER';
+                spec1 = `RAM: ${perangkat.ramGB} GB`;
+                spec2 = perangkat.spesifikasi;
+            } else if (perangkat instanceof Proyektor) {
+                tipe = 'PROYEKTOR';
+                spec1 = `Lumen: ${perangkat.lumen}`;
+                spec2 = `Resolusi: ${perangkat.resolusi}`;
+            } else if (perangkat instanceof Printer) {
+                tipe = 'PRINTER';
+                spec1 = `Tipe: ${perangkat.tipe}`;
+                spec2 = `Kecepatan: ${perangkat.kecepatanPpm} ppm`;
+            }
+
+            const pelaporNama = perangkat.pelaporAktif || '-';
+
+            card.innerHTML = `
+              <div class="vehicle-header">
+                <span class="vehicle-type">${tipe}</span>
+                <span class="vehicle-plat">${perangkat.kodeInventaris}</span>
+              </div>
+              <div>
+                <div class="vehicle-title">${perangkat.nama}</div>
+                <div class="vehicle-desc">${perangkat.deskripsi || 'Perangkat laboratorium standar.'}</div>
+                <div class="vehicle-specs">
+                  <div class="spec-item"><span>Status</span><span style="color:${isRented ? 'var(--accent-orange)' : 'var(--accent-green)'}">${perangkat.status}</span></div>
+                  <div class="spec-item"><span>${spec1 ? spec1 : ''}</span></div>
+                  <div class="spec-item"><span>${spec2 ? spec2 : ''}</span></div>
+                  <div class="spec-item"><span>Pelapor</span><span style="color:${isRented ? 'var(--accent-light-red)' : 'var(--text-dim)'}">${pelaporNama}</span></div>
+                </div>
+              </div>
+              <div class="vehicle-footer">
+                <div class="price-tag"><b>${perangkat.status}</b></div>
+                <button class="btn-action ${isRented ? 'return' : ''}" id="btn-${perangkat.kodeInventaris}" onclick="toggleReport('${perangkat.kodeInventaris}')">
+                  ${isRented ? 'Selesaikan' : 'Laporkan'}
+                </button>
+              </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // ============================================================
+    //  LOGIKA LAPORAN & PENYELESAIAN
+    // ============================================================
+
+    function toggleReport(kode) {
+        const perangkat = daftarPerangkat.find(p => p.kodeInventaris === kode);
+        if (!perangkat) return;
+
+        if (perangkat.status === 'Tersedia') {
+            const result = pelaporTerpilih.buatLaporan(perangkat);
+            if (result.success) {
+                const idLaporan = `LRP-${String(counterLaporan++).padStart(3, '0')}`;
+                const transaksi = new LaporanKerusakan(idLaporan, pelaporTerpilih, perangkat, `Kerusakan pada ${perangkat.nama}`);
+                daftarTransaksi.push(transaksi);
+                transaksi.isSukses = true;
+                appendLog('system', `Status perangkat [${perangkat.kodeInventaris}] berhasil diubah menjadi: RUSAK.`);
+                appendLog('success', `Pemberitahuan: Laporan ${idLaporan} Berhasil! ${pelaporTerpilih.nama} melaporkan ${perangkat.nama}.`);
+                renderVehicles();
+                renderCustomers();
+            } else {
+                appendLog('error', `Pemberitahuan: Laporan Gagal! ${result.message}`);
+            }
+        } else {
+            const result = pelaporTerpilih.selesaikanLaporan(perangkat);
+            if (result.success) {
+                const transaksi = daftarTransaksi.find(t => t.perangkat === perangkat && !t.isSukses);
+                if (transaksi) {
+                    transaksi.selesaikanLaporan();
+                    appendLog('system', `Status perangkat [${perangkat.kodeInventaris}] berhasil diubah menjadi: TERSEDIA.`);
+                    appendLog('success', `Pemberitahuan: Laporan ${transaksi.idLaporan} Selesai! ${perangkat.nama} telah diperbaiki.`);
+                    appendLog('info', transaksi.tampilkanDetail());
+                } else {
+                    perangkat.selesaikan();
+                    appendLog('system', `Status perangkat [${perangkat.kodeInventaris}] berhasil diubah menjadi: TERSEDIA.`);
+                    appendLog('success', `Pemberitahuan: Perangkat ${perangkat.nama} telah diperbaiki.`);
+                }
+                renderVehicles();
+                renderCustomers();
+            } else {
+                appendLog('error', `Pemberitahuan: Gagal! ${result.message}`);
+            }
+        }
+    }
+
+    // ============================================================
+    //  TAMBAH PELAPOR BARU
+    // ============================================================
+
+    function addNewCustomer() {
+        const nameInput = document.getElementById('new-cust-name');
+        const nikInput = document.getElementById('new-cust-nik');
+        const nama = nameInput.value.trim();
+        const nik = nikInput.value.trim();
+        if (!nama || !nik) {
+            appendLog('error', 'Pemberitahuan: Nama dan NIK harus diisi!');
+            return;
+        }
+        if (nik.length < 10) {
+            appendLog('error', 'Pemberitahuan: NIK minimal 10 digit!');
+            return;
+        }
+        if (daftarPelapor.some(p => p.nik === nik)) {
+            appendLog('error', `Pemberitahuan: Pelapor dengan NIK ${nik} sudah terdaftar!`);
+            return;
+        }
+        const pelaporBaru = new Pelapor(nama, nik);
+        daftarPelapor.push(pelaporBaru);
+        nameInput.value = '';
+        nikInput.value = '';
+        selectCustomer(daftarPelapor.length - 1);
+        appendLog('success', `Pemberitahuan: Pelapor baru "${nama}" berhasil ditambahkan!`);
+        renderCustomers();
+        renderVehicles();
+    }
+
+    // ============================================================
+    //  TERMINAL LOG
+    // ============================================================
+
+    function appendLog(type, message) {
+        const body = document.getElementById('log-body');
+        const line = document.createElement('div');
+        line.className = `terminal-line ${type}`;
+        line.textContent = message;
+        body.appendChild(line);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    // ============================================================
+    //  DIAGRAM TABS
+    // ============================================================
+
+    function switchDiagramTab(event, tabId) {
+        document.querySelectorAll('.diag-tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        document.querySelectorAll('.diag-tab-content').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // ============================================================
+    //  INISIALISASI
+    // ============================================================
+
+    function initSimulation() {
+        const logBody = document.getElementById('log-body');
+        logBody.innerHTML = '';
+
+        appendLog('system', 'SYSTEM INITIALIZED');
+        appendLog('info', 'SISTEM PELAPORAN KERUSAKAN PERANGKAT LABORATORIUM');
+        appendLog('info', `Armada perangkat (${daftarPerangkat.length} unit) dan Pelapor (${daftarPelapor.length} orang) berhasil di-instansiasi.`);
+        appendLog('system', '==========================================================');
+        appendLog('system', '   SIMULASI SISTEM PELAPORAN KERUSAKAN PERANGKAT LAB    ');
+        appendLog('system', '==========================================================');
+        appendLog('info', '>>> MEMULAI SIMULASI PELAPORAN <<<');
+
+        const skenario = [
+            { pelapor: 'Andi Pratama', perangkat: 'PC-001' },
+            { pelapor: 'Budi Santoso', perangkat: 'PRJ-001' },
+            { pelapor: 'Citra Dewi', perangkat: 'PRT-001' },
+            { pelapor: 'Dian Purnama', perangkat: 'PC-002' },
+            { pelapor: 'Eka Wijaya', perangkat: 'PRJ-002' },
+            { pelapor: 'Fitria Sari', perangkat: 'PRT-002' },
+            { pelapor: 'Gilang Ramadhan', perangkat: 'PC-003' },
+            { pelapor: 'Hana Maulana', perangkat: 'PRJ-003' },
+            { pelapor: 'Indra Kusuma', perangkat: 'PRT-003' },
+            { pelapor: 'Joko Susanto', perangkat: 'PC-004' },
+        ];
+
+        let idxLaporan = 1;
+        skenario.forEach((s, i) => {
+            const pelapor = daftarPelapor.find(p => p.nama === s.pelapor);
+            const perangkat = daftarPerangkat.find(p => p.kodeInventaris === s.perangkat);
+            if (pelapor && perangkat && perangkat.status === 'Tersedia') {
+                const result = pelapor.buatLaporan(perangkat);
+                if (result.success) {
+                    const idLaporan = `LRP-${String(idxLaporan++).padStart(3, '0')}`;
+                    const transaksi = new LaporanKerusakan(idLaporan, pelapor, perangkat, `Kerusakan pada ${perangkat.nama}`);
+                    daftarTransaksi.push(transaksi);
+                    transaksi.isSukses = true;
+                    appendLog('info', `>>> TRANSAKSI ${i + 1}: ${pelapor.nama} melaporkan ${perangkat.nama} <<<`);
+                    appendLog('system', `Status perangkat [${perangkat.kodeInventaris}] berhasil diubah menjadi: RUSAK.`);
+                    appendLog('success', `Pemberitahuan: Laporan ${idLaporan} Berhasil! ${pelapor.nama} melaporkan ${perangkat.nama}.`);
+                } else {
+                    appendLog('error', `>>> TRANSAKSI ${i + 1}: Gagal! ${pelapor.nama} tidak dapat melaporkan ${perangkat.nama}.`);
+                }
+            } else {
+                appendLog('error', `>>> TRANSAKSI ${i + 1}: Gagal! Perangkat ${s.perangkat} tidak tersedia atau pelapor tidak ditemukan.`);
+            }
+        });
+
+        const perbaikan = [
+            { perangkat: 'PC-001', pelapor: 'Andi Pratama' },
+            { perangkat: 'PRJ-001', pelapor: 'Budi Santoso' },
+            { perangkat: 'PRT-001', pelapor: 'Citra Dewi' },
+        ];
+
+        perbaikan.forEach((s, i) => {
+            const pelapor = daftarPelapor.find(p => p.nama === s.pelapor);
+            const perangkat = daftarPerangkat.find(p => p.kodeInventaris === s.perangkat);
+            if (pelapor && perangkat && perangkat.status === 'Rusak') {
+                const transaksi = daftarTransaksi.find(t => t.perangkat === perangkat && !t.isSukses);
+                if (transaksi) {
+                    transaksi.selesaikanLaporan();
+                    appendLog('info', `>>> PERBAIKAN ${i + 1}: ${pelapor.nama} menyelesaikan ${perangkat.nama} <<<`);
+                    appendLog('system', `Status perangkat [${perangkat.kodeInventaris}] berhasil diubah menjadi: TERSEDIA.`);
+                    appendLog('success', `Pemberitahuan: Laporan ${transaksi.idLaporan} Selesai! ${perangkat.nama} telah diperbaiki.`);
+                    appendLog('info', transaksi.tampilkanDetail());
+                }
+            }
+        });
+
+        appendLog('system', '----------------------------------------------------------');
+        appendLog('success', '>>> SIMULASI SELESAI. Silakan berinteraksi lewat visual dashboard! <<<');
+
+        renderVehicles();
+        renderCustomers();
+        selectCustomer(0);
+    }
+
+    // ============================================================
+    //  INIT MERMAID & START
+    // ============================================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+        mermaid.initialize({
+            theme: 'dark',
+            themeVariables: {
+                background: '#0b0e14',
+                primaryColor: '#1a2a3a',
+                primaryTextColor: '#e8edf5',
+                primaryBorderColor: '#2a3a4a',
+                lineColor: '#4a9eff',
+                secondaryColor: '#141c26',
+                tertiaryColor: '#0a0e14',
+                fontFamily: 'Outfit, sans-serif',
+                fontSize: '14px',
+            },
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            classDiagram: { useMaxWidth: true }
+        });
+        initSimulation();
+    });
+
+    // ============================================================
+    //  EXPOSE GLOBAL
+    // ============================================================
+
+    window.addNewCustomer = addNewCustomer;
+    window.selectCustomer = selectCustomer;
+    window.toggleReport = toggleReport;
+    window.switchDiagramTab = switchDiagramTab;
+</script>
+
+</body>
+</html>
