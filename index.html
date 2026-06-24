@@ -1158,7 +1158,7 @@
             </div>
             <div class="pseudocode-box">
                 <span class="pc-comment">// Pseudocode - Algoritma Penyelesaian</span><br>
-               // Pseudocode - Algoritma Penyelesaian (Perbaikan Laporan)
+               // ALGORITMA SistemPenyelesaianLaporan
 // { Menangani penyelesaian laporan kerusakan perangkat lab dengan pendekatan OOP }
 
 <span class="pc-keyword">DEKLARASI</span>
@@ -1181,9 +1181,12 @@
             <span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi
             <span class="pc-keyword">this</span>.tanggal &lt;- tanggal
             <span class="pc-keyword">this</span>.pelapor &lt;- pelapor
-            <span class="pc-keyword">this</span>.idLaporan &lt;- generateUniqueID()   <span class="pc-comment">// Proses: generate ID otomatis</span>
-            <span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>            <span class="pc-comment">// Proses: set status awal</span>
-            <span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()  <span class="pc-comment">// Proses: catat waktu</span>
+            <span class="pc-keyword">this</span>.idLaporan &lt;- generateUniqueID()
+            <span class="pc-comment">// Proses: generate ID otomatis</span>
+            <span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>
+            <span class="pc-comment">// Proses: set status awal</span>
+            <span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()
+            <span class="pc-comment">// Proses: catat waktu</span>
             <span class="pc-keyword">this</span>.tanggalSelesai &lt;- null
             <span class="pc-keyword">this</span>.isSukses &lt;- <span class="pc-keyword">FALSE</span>
         <span class="pc-keyword">END METHOD</span>
@@ -1201,7 +1204,7 @@
         <span class="pc-keyword">END METHOD</span>
 
         <span class="pc-comment">// Fungsi untuk mendapatkan ID laporan (Output)</span>
-        <span class="pc-keyword">METHOD</span> <span class="pc-func">getID</span>() -> string
+        <span class="pc-keyword">METHOD</span> <span class="pc-func">getId</span>() -> string
             <span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan
         <span class="pc-keyword">END METHOD</span>
     <span class="pc-keyword">END CLASS</span>
@@ -1241,7 +1244,8 @@
     <span class="pc-keyword">CLASS</span> <span class="pc-var">Perangkat</span>
         <span class="pc-keyword">PRIVATE</span> id : string
         <span class="pc-keyword">PRIVATE</span> nama : string
-        <span class="pc-keyword">PRIVATE</span> status : string   <span class="pc-comment">// 'Tersedia' atau 'Rusak'</span>
+        <span class="pc-keyword">PRIVATE</span> status : string
+        <span class="pc-comment">// 'Tersedia' atau 'Rusak'</span>
 
         <span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(id, nama, status)
             <span class="pc-keyword">this</span>.id &lt;- id
@@ -1320,12 +1324,13 @@
         <span class="pc-comment">// === 4. OUTPUT ===</span>
         OUTPUT <span class="pc-string">"----------------------------------------------"</span>
         OUTPUT <span class="pc-string">"SUKSES! Laporan kerusakan telah selesai diperbaiki."</span>
-        OUTPUT <span class="pc-string">"ID Laporan      : "</span> + laporanDitemukan.getID()
+        OUTPUT <span class="pc-string">"ID Laporan      : "</span> + laporanDitemukan.getId()
         OUTPUT <span class="pc-string">"Status          : Selesai"</span>
         OUTPUT <span class="pc-string">"Tanggal Selesai : "</span> + laporanDitemukan.tanggalSelesai
         OUTPUT <span class="pc-string">"----------------------------------------------"</span>
         OUTPUT <span class="pc-string">"Nota perbaikan telah dicetak."</span>
-        cetakNota(laporanDitemukan)   <span class="pc-comment">// Proses cetak nota</span>
+        cetakNota(laporanDitemukan)
+        <span class="pc-comment">// Proses cetak nota</span>
 
     <span class="pc-condition">ELSE</span>
         <span class="pc-comment">// Jika laporan tidak ditemukan atau perangkat sudah tidak rusak</span>
@@ -1335,6 +1340,8 @@
 
     <span class="pc-comment">// === SELESAI ===</span>
     OUTPUT <span class="pc-string">"Proses penyelesaian laporan selesai."</span>
+
+<span class="pc-keyword">END ALGORITMA</span>
 
 <span class="pc-keyword">END ALGORITMA</span>
             </div>
