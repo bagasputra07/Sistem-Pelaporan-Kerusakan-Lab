@@ -114,6 +114,11 @@
             letter-spacing: 0.5px;
             margin-bottom: 18px;
             color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .card-title span {
             color: var(--accent-cyan);
@@ -551,7 +556,6 @@
             height: auto;
         }
 
-        /* Box untuk gambar */
         .image-box {
             background: #0a0e14;
             border: 1px solid var(--border-color);
@@ -599,7 +603,6 @@
             color: var(--accent-purple);
         }
 
-        /* Flowchart section untuk diag-resolve */
         .flowchart-section {
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -665,19 +668,18 @@
             color: #065f46;
         }
 
-        /* Form grid untuk simulasi */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px 20px;
             margin: 12px 0;
         }
-        .form-grid label { 
-            font-weight: 600; 
+        .form-grid label {
+            font-weight: 600;
             color: var(--text-dim);
             font-size: 14px;
         }
-        .form-grid input { 
+        .form-grid input {
             width: 100%;
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
@@ -710,8 +712,8 @@
             transition: 0.2s;
             font-family: var(--font-sans);
         }
-        .btn:hover { 
-            background: #3a8aee; 
+        .btn:hover {
+            background: #3a8aee;
             transform: scale(1.02);
             box-shadow: 0 0 20px rgba(74, 158, 255, 0.25);
         }
@@ -732,11 +734,18 @@
             font-size: 13px;
             color: var(--text-primary);
         }
-        .result-area .success { color: var(--accent-green); font-weight: bold; }
-        .result-area .error { color: var(--accent-red); font-weight: bold; }
-        .result-area .info { color: var(--accent-blue); }
+        .result-area .success {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+        .result-area .error {
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+        .result-area .info {
+            color: var(--accent-blue);
+        }
 
-        /* Code box untuk pseudocode */
         .code-box {
             background: #0a0e14;
             border: 1px solid var(--border-color);
@@ -773,6 +782,104 @@
         }
         .code-box .pc-class {
             color: var(--accent-orange);
+        }
+
+        /* ===== TOMBOL RUN CODE ===== */
+        .btn-run-dart {
+            background: linear-gradient(135deg, #00d4ff, #4a9eff);
+            color: #fff;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: var(--font-sans);
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .btn-run-dart:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 28px rgba(0, 212, 255, 0.4);
+        }
+        .btn-run-dart:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== MODAL POPUP DARTPAD ===== */
+        .modal-overlay-dart {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay-dart.active {
+            display: flex;
+        }
+        .modal-content-dart {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            width: 92%;
+            max-width: 1200px;
+            height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+        .modal-header-dart {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            flex-shrink: 0;
+        }
+        .modal-header-dart h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .modal-header-dart h3 span {
+            color: var(--accent-cyan);
+        }
+        .modal-close-dart {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+            padding: 0 6px;
+        }
+        .modal-close-dart:hover {
+            color: var(--accent-red);
+        }
+        .modal-body-dart {
+            flex: 1;
+            padding: 6px;
+            background: #0a0e14;
+        }
+        .modal-body-dart iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
         }
 
         @media (max-width: 768px) {
@@ -817,104 +924,15 @@
             .form-grid {
                 grid-template-columns: 1fr;
             }
+            .card-title {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .btn-run-dart {
+                align-self: flex-start;
+            }
         }
-
-        /* ===== TOMBOL RUN CODE ===== */
-.btn-run-dart {
-    background: linear-gradient(135deg, #00d4ff, #4a9eff);
-    color: #fff;
-    border: none;
-    padding: 8px 22px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    font-family: var(--font-sans);
-    box-shadow: 0 0 16px rgba(0, 212, 255, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-.btn-run-dart:hover {
-    transform: scale(1.04);
-    box-shadow: 0 0 28px rgba(0, 212, 255, 0.4);
-}
-.btn-run-dart:active {
-    transform: scale(0.96);
-}
-
-/* ===== MODAL POPUP DARTPAD ===== */
-.modal-overlay-dart {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: 10000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
-}
-.modal-overlay-dart.active {
-    display: flex;
-}
-.modal-content-dart {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    width: 92%;
-    max-width: 1200px;
-    height: 88vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    overflow: hidden;
-}
-.modal-header-dart {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-primary);
-    flex-shrink: 0;
-}
-.modal-header-dart h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-.modal-header-dart h3 span {
-    color: var(--accent-cyan);
-}
-.modal-close-dart {
-    background: transparent;
-    border: none;
-    color: var(--text-dim);
-    font-size: 28px;
-    cursor: pointer;
-    transition: color 0.2s;
-    line-height: 1;
-    padding: 0 6px;
-}
-.modal-close-dart:hover {
-    color: var(--accent-red);
-}
-.modal-body-dart {
-    flex: 1;
-    padding: 6px;
-    background: #0a0e14;
-}
-.modal-body-dart iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 6px;
-}
 
         @media (max-width: 480px) {
             body {
@@ -928,6 +946,10 @@
             .btn-action {
                 width: 100%;
                 text-align: center;
+            }
+            .modal-content-dart {
+                width: 98%;
+                height: 95vh;
             }
         }
     </style>
@@ -992,9 +1014,12 @@
 
     <!-- ===== KODE DART CLASS ===== -->
     <div class="cyber-card" style="margin-bottom: 40px;">
-        <div class="card-title"><span>KODE DART</span> CLASS OOP</div>
-        <div class="dart-code-container">
-            <pre>
+        <div class="card-title">
+            <span><span>KODE DART</span> CLASS OOP</span>
+            <button class="btn-run-dart" onclick="runDartCode()">▶ Run Code</button>
+        </div>
+        <div class="dart-code-container" id="dartCodeContainer">
+            <pre id="dartCodePre">
 <span class="comment">// ============================================================</span>
 <span class="comment">// Nama Anggota Kelompok:</span>
 <span class="comment">// 1. M. Bagas Khoirullah (NIM: 251410016)</span>
@@ -1092,14 +1117,14 @@
   <span class="keyword">String</span> nama;
   <span class="keyword">String</span> nik;
   <span class="keyword">int</span> _jumlahLaporanAktif = <span class="keyword">0</span>;
-  <span class="keyword">List</span><<span class="keyword">String</span>> _laporanAktif = [];
+  <span class="keyword">List</span>&lt;<span class="keyword">String</span>&gt; _laporanAktif = [];
 
   <span class="class-name">Pelapor</span>(<span class="keyword">this</span>.nama, <span class="keyword">this</span>.nik);
 
   <span class="keyword">int</span> get jumlahLaporanAktif => _jumlahLaporanAktif;
-  <span class="keyword">List</span><<span class="keyword">String</span>> get laporanAktif => <span class="keyword">List</span>.unmodifiable(_laporanAktif);
+  <span class="keyword">List</span>&lt;<span class="keyword">String</span>&gt; get laporanAktif => <span class="keyword">List</span>.unmodifiable(_laporanAktif);
 
-  <span class="keyword">Map</span><<span class="keyword">String</span>, <span class="keyword">dynamic</span>> <span class="function">buatLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
+  <span class="keyword">Map</span>&lt;<span class="keyword">String</span>, <span class="keyword">dynamic</span>&gt; <span class="function">buatLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
     <span class="keyword">if</span> (_jumlahLaporanAktif >= <span class="keyword">2</span>) {
       <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Batas maksimal 2 laporan aktif per pelapor.'</span>};
     }
@@ -1115,7 +1140,7 @@
     <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Gagal melaporkan perangkat.'</span>};
   }
 
-  <span class="keyword">Map</span><<span class="keyword">String</span>, <span class="keyword">dynamic</span>> <span class="function">selesaikanLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
+  <span class="keyword">Map</span>&lt;<span class="keyword">String</span>, <span class="keyword">dynamic</span>&gt; <span class="function">selesaikanLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
     <span class="keyword">if</span> (perangkat.status == <span class="string">'Rusak'</span> || perangkat.status == <span class="string">'Dalam Perbaikan'</span>) {
       <span class="keyword">int</span> idx = _laporanAktif.indexOf(perangkat.kodeInventaris);
       <span class="keyword">if</span> (idx != -<span class="keyword">1</span>) {
@@ -1298,12 +1323,10 @@
                 Flowchart dan pseudocode untuk alur pelaporan kerusakan perangkat laboratorium.
             </p>
 
-            <!-- Box Gambar -->
             <div class="image-box">
                 <img src="deepseek_mermaid_20260622_94dfcf.png" class="gambar-box" alt="Flowchart Algoritma Pelaporan" />
             </div>
 
-            <!-- Box Pseudocode -->
             <div class="pseudocode-box">
                 <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan</span><br>
                 <span class="pc-comment">// { Menangani pelaporan kerusakan perangkat lab dengan pendekatan OOP }</span><br>
@@ -1409,18 +1432,16 @@
             </div>
         </div>
 
-        <!-- Tab Algoritma Penyelesaian (dengan tata letak persis seperti tab Algoritma Pelaporan) -->
+        <!-- Tab Algoritma Penyelesaian -->
         <div class="diag-tab-content" id="diag-resolve">
             <p style="margin-bottom: 20px; color: var(--text-dim);">
                 Flowchart dan pseudocode untuk alur penyelesaian (perbaikan) laporan kerusakan.
             </p>
 
-            <!-- Box Gambar -->
             <div class="image-box">
                 <img src="WhatsApp Image 2026-06-24 at 12.40.16.jpeg" class="gambar-box" alt="Flowchart Algoritma Penyelesaian" />
             </div>
 
-            <!-- Box Pseudocode -->
             <div class="pseudocode-box">
                 <span class="pc-comment">// ============================================================</span><br>
                 <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan Perangkat Lab</span><br>
@@ -1509,6 +1530,19 @@
                 &nbsp;&nbsp;OUTPUT <span class="pc-string">"--- Proses selesai ---"</span><br>
                 <span class="pc-keyword">END ALGORITMA</span>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL DARTPAD ===== -->
+<div class="modal-overlay-dart" id="dartModal">
+    <div class="modal-content-dart">
+        <div class="modal-header-dart">
+            <h3><span>DartPad</span> — Output Demo</h3>
+            <button class="modal-close-dart" onclick="closeDartModal()">×</button>
+        </div>
+        <div class="modal-body-dart">
+            <iframe id="dartFrame" src=""></iframe>
         </div>
     </div>
 </div>
@@ -1880,6 +1914,133 @@
     }
 
     // ============================================================
+    //  RUN CODE — BUKA DARTPAD DI MODAL
+    // ============================================================
+
+    function runDartCode() {
+        const pre = document.getElementById('dartCodePre');
+        let code = pre.textContent;
+
+        // Tambahkan main() function di akhir
+        const mainFunction = `
+
+void main() {
+  print('==================================================');
+  print('  DEMONSTRASI SISTEM PELAPORAN KERUSAKAN PERANGKAT  ');
+  print('==================================================');
+  print('');
+
+  // 1. Buat perangkat
+  print('--- 1. INISIALISASI PERANGKAT ---');
+  var komputer1 = Komputer('PC-001', 'Dell OptiPlex 7070', 'Tersedia', 'Intel Core i7, SSD 512GB', 16);
+  var proyektor1 = Proyektor('PRJ-001', 'Epson EB-X05', 'Tersedia', 3200, '1024x768');
+  var printer1 = Printer('PRT-001', 'HP LaserJet M404', 'Tersedia', 'Laser Mono', 38);
+  print(' Komputer  : \${komputer1.nama} (\${komputer1.kodeInventaris})');
+  print(' Proyektor : \${proyektor1.nama} (\${proyektor1.kodeInventaris})');
+  print(' Printer   : \${printer1.nama} (\${printer1.kodeInventaris})');
+  print('');
+
+  // 2. Buat pelapor
+  print('--- 2. INISIALISASI PELAPOR ---');
+  var pelapor1 = Pelapor('Andi Pratama', '3201010101010001');
+  var pelapor2 = Pelapor('Budi Santoso', '3201010202020002');
+  pelapor1.tampilkanInfo();
+  print('');
+  pelapor2.tampilkanInfo();
+  print('');
+
+  // 3. Andi melaporkan komputer
+  print('--- 3. PELAPORAN: Andi melaporkan komputer ---');
+  var hasil1 = pelapor1.buatLaporan(komputer1);
+  print(hasil1['message']);
+  komputer1.tampilkanInfo();
+  print('');
+
+  // 4. Budi melaporkan proyektor
+  print('--- 4. PELAPORAN: Budi melaporkan proyektor ---');
+  var hasil2 = pelapor2.buatLaporan(proyektor1);
+  print(hasil2['message']);
+  proyektor1.tampilkanInfo();
+  print('');
+
+  // 5. Andi mencoba laporan kedua (printer) — harusnya berhasil karena batas 2
+  print('--- 5. PELAPORAN: Andi melaporkan printer (laporan ke-2) ---');
+  var hasil3 = pelapor1.buatLaporan(printer1);
+  print(hasil3['message']);
+  print('');
+
+  // 6. Andi coba laporan ketiga (harus gagal)
+  print('--- 6. PELAPORAN: Andi mencoba laporan ke-3 (harus gagal) ---');
+  var komputer2 = Komputer('PC-002', 'HP ProDesk 600', 'Tersedia', 'Intel Core i5, SSD 256GB', 8);
+  var hasil4 = pelapor1.buatLaporan(komputer2);
+  print(hasil4['message']);
+  print('');
+
+  // 7. Selesaikan laporan komputer
+  print('--- 7. PENYELESAIAN: Perbaiki komputer (Andi) ---');
+  var hasil5 = pelapor1.selesaikanLaporan(komputer1);
+  print(hasil5['message']);
+  komputer1.tampilkanInfo();
+  print('');
+
+  // 8. Buat laporan formal dengan LaporanKerusakan
+  print('--- 8. LAPORAN FORMAL: Buat laporan kerusakan printer ---');
+  var laporan = LaporanKerusakan('LRP-001', pelapor2, printer1, 'Printer tidak mau mencetak, error paper jam');
+  print('Laporan berhasil dibuat dengan ID: \${laporan.idLaporan}');
+  laporan.selesaikanLaporan();
+  print('Laporan selesai diproses!');
+  print('');
+
+  // 9. Tampilkan detail laporan
+  print('--- 9. DETAIL LAPORAN ---');
+  laporan.tampilkanDetail();
+
+  // 10. Tampilkan info pelapor setelah semua proses
+  print('--- 10. INFO PELAPOR SETELAH PROSES ---');
+  pelapor1.tampilkanInfo();
+  print('');
+  pelapor2.tampilkanInfo();
+
+  print('');
+  print('==================================================');
+  print('  DEMONSTRASI SELESAI ✅  ');
+  print('==================================================');
+}
+`;
+
+        code = code + mainFunction;
+
+        // Encode URL
+        const encoded = encodeURIComponent(code);
+        const url = `https://dartpad.dev/embed.html?code=${encoded}&run=true`;
+
+        const frame = document.getElementById('dartFrame');
+        frame.src = url;
+
+        // Tampilkan modal
+        document.getElementById('dartModal').classList.add('active');
+    }
+
+    function closeDartModal() {
+        document.getElementById('dartModal').classList.remove('active');
+        document.getElementById('dartFrame').src = '';
+    }
+
+    // Tutup modal dengan tombol ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeDartModal();
+        }
+    });
+
+    // Tutup modal jika klik di luar konten
+    document.getElementById('dartModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDartModal();
+        }
+    });
+
+    // ============================================================
     //  INISIALISASI
     // ============================================================
 
@@ -1991,6 +2152,8 @@
     window.selectCustomer = selectCustomer;
     window.toggleReport = toggleReport;
     window.switchDiagramTab = switchDiagramTab;
+    window.runDartCode = runDartCode;
+    window.closeDartModal = closeDartModal;
 </script>
 
 </body>
