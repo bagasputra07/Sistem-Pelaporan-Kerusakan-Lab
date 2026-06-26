@@ -1140,19 +1140,37 @@
     <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Gagal melaporkan perangkat.'</span>};
   }
 
+  <span class="comment">// ========== PERBAIKAN UTAMA ==========</span>
   <span class="keyword">Map</span>&lt;<span class="keyword">String</span>, <span class="keyword">dynamic</span>&gt; <span class="function">selesaikanLaporan</span>(<span class="class-name">Perangkat</span> perangkat) {
-    <span class="keyword">if</span> (perangkat.status == <span class="string">'Rusak'</span> || perangkat.status == <span class="string">'Dalam Perbaikan'</span>) {
-      <span class="keyword">int</span> idx = _laporanAktif.indexOf(perangkat.kodeInventaris);
-      <span class="keyword">if</span> (idx != -<span class="keyword">1</span>) {
-        _laporanAktif.removeAt(idx);
-        _jumlahLaporanAktif--;
-      }
-      <span class="keyword">bool</span> berhasil = perangkat.selesaikan();
-      <span class="keyword">if</span> (berhasil) {
-        <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">true</span>, <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} telah diperbaiki.'</span>};
-      }
+    <span class="comment">// Cek apakah pelapor memiliki laporan aktif untuk perangkat ini</span>
+    <span class="keyword">int</span> idx = _laporanAktif.indexOf(perangkat.kodeInventaris);
+    <span class="keyword">if</span> (idx == -<span class="keyword">1</span>) {
+      <span class="keyword">return</span> {
+        <span class="string">'success'</span>: <span class="keyword">false</span>,
+        <span class="string">'message'</span>: <span class="string">'Anda tidak memiliki laporan aktif untuk perangkat ${perangkat.nama}.'</span>
+      };
     }
-    <span class="keyword">return</span> {<span class="string">'success'</span>: <span class="keyword">false</span>, <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} tidak dalam status rusak.'</span>};
+
+    <span class="comment">// Hapus dari daftar laporan aktif (sebelum menyelesaikan)</span>
+    _laporanAktif.removeAt(idx);
+    _jumlahLaporanAktif--;
+
+    <span class="comment">// Sekarang panggil method selesaikan pada perangkat</span>
+    <span class="keyword">bool</span> berhasil = perangkat.selesaikan();
+    <span class="keyword">if</span> (berhasil) {
+      <span class="keyword">return</span> {
+        <span class="string">'success'</span>: <span class="keyword">true</span>,
+        <span class="string">'message'</span>: <span class="string">'Perangkat ${perangkat.nama} telah diperbaiki dan status dikembalikan ke Tersedia.'</span>
+      };
+    } <span class="keyword">else</span> {
+      <span class="comment">// Jika gagal (misal status tidak sesuai), kembalikan ke daftar aktif</span>
+      _laporanAktif.add(perangkat.kodeInventaris);
+      _jumlahLaporanAktif++;
+      <span class="keyword">return</span> {
+        <span class="string">'success'</span>: <span class="keyword">false</span>,
+        <span class="string">'message'</span>: <span class="string">'Gagal memperbaiki perangkat ${perangkat.nama}.'</span>
+      };
+    }
   }
 
   <span class="keyword">void</span> <span class="function">tampilkanInfo</span>() {
@@ -1200,6 +1218,70 @@
     print(<span class="string">'Status       : ${isSukses ? 'SELESAI ✅' : 'AKTIF ⏳'}'</span>);
     print(<span class="string">'=================================================='</span>);
   }
+}
+
+<span class="comment">// ---------- Fungsi Main untuk Menguji Sistem ----------</span>
+<span class="keyword">void</span> <span class="function">main</span>() {
+  <span class="comment">// Membuat beberapa perangkat</span>
+  var laptop = <span class="class-name">Komputer</span>(<span class="string">'K001'</span>, <span class="string">'Laptop Dell'</span>, <span class="string">'Tersedia'</span>, <span class="string">'Intel i7'</span>, <span class="keyword">16</span>);
+  var proyektor = <span class="class-name">Proyektor</span>(<span class="string">'P001'</span>, <span class="string">'Proyektor Epson'</span>, <span class="string">'Tersedia'</span>, <span class="keyword">3000</span>, <span class="string">'1080p'</span>);
+  var printer = <span class="class-name">Printer</span>(<span class="string">'PR001'</span>, <span class="string">'Printer HP'</span>, <span class="string">'Tersedia'</span>, <span class="string">'Laser'</span>, <span class="keyword">20</span>);
+
+  <span class="comment">// Membuat pelapor</span>
+  var pelapor1 = <span class="class-name">Pelapor</span>(<span class="string">'Andi'</span>, <span class="string">'1234567890'</span>);
+
+  <span class="comment">// Melaporkan perangkat</span>
+  print(<span class="string">'--- Membuat Laporan ---'</span>);
+  var hasil1 = pelapor1.buatLaporan(laptop);
+  print(hasil1[<span class="string">'message'</span>]);
+  var hasil2 = pelapor1.buatLaporan(proyektor);
+  print(hasil2[<span class="string">'message'</span>]);
+
+  <span class="comment">// Coba laporan ketiga (harus gagal karena batas 2)</span>
+  var hasil3 = pelapor1.buatLaporan(printer);
+  print(hasil3[<span class="string">'message'</span>]);
+
+  <span class="comment">// Tampilkan info pelapor</span>
+  print(<span class="string">'\n--- Info Pelapor ---'</span>);
+  pelapor1.tampilkanInfo();
+
+  <span class="comment">// Tampilkan info perangkat</span>
+  print(<span class="string">'\n--- Info Perangkat ---'</span>);
+  laptop.tampilkanInfo();
+  proyektor.tampilkanInfo();
+  printer.tampilkanInfo();
+
+  <span class="comment">// Menyelesaikan laporan (perbaiki laptop)</span>
+  print(<span class="string">'\n--- Menyelesaikan Laporan ---'</span>);
+  var selesai1 = pelapor1.selesaikanLaporan(laptop);
+  print(selesai1[<span class="string">'message'</span>]);
+
+  <span class="comment">// Coba selesaikan laporan yang tidak dimiliki (printer)</span>
+  var selesai2 = pelapor1.selesaikanLaporan(printer);
+  print(selesai2[<span class="string">'message'</span>]);
+
+  <span class="comment">// Tampilkan info setelah perbaikan</span>
+  print(<span class="string">'\n--- Info setelah perbaikan ---'</span>);
+  pelapor1.tampilkanInfo();
+  laptop.tampilkanInfo();
+  proyektor.tampilkanInfo();
+
+  <span class="comment">// Buat laporan baru untuk printer (karena sudah ada slot)</span>
+  var hasil4 = pelapor1.buatLaporan(printer);
+  print(hasil4[<span class="string">'message'</span>]);
+
+  <span class="comment">// Buat objek LaporanKerusakan untuk mencatat detail</span>
+  var laporanResmi = <span class="class-name">LaporanKerusakan</span>(<span class="string">'LR-001'</span>, pelapor1, printer, <span class="string">'Printer sering macet'</span>);
+  laporanResmi.tampilkanDetail();
+
+  <span class="comment">// Tandai selesai di LaporanKerusakan</span>
+  laporanResmi.selesaikanLaporan();
+  laporanResmi.tampilkanDetail();
+
+  <span class="comment">// Sekarang selesaikan melalui pelapor (agar status perangkat berubah)</span>
+  var selesai3 = pelapor1.selesaikanLaporan(printer);
+  print(<span class="string">'\n'</span> + selesai3[<span class="string">'message'</span>]);
+  printer.tampilkanInfo();
 }
             </pre>
         </div>
@@ -1641,18 +1723,26 @@
             return { success: false, message: 'Gagal melaporkan perangkat.' };
         }
         selesaikanLaporan(perangkat) {
-            if (perangkat.status === 'Rusak' || perangkat.status === 'Dalam Perbaikan') {
-                const idx = this.laporanAktif.indexOf(perangkat.kodeInventaris);
-                if (idx !== -1) {
-                    this.laporanAktif.splice(idx, 1);
-                    this.jumlahLaporanAktif--;
-                }
-                const berhasil = perangkat.selesaikan();
-                if (berhasil) {
-                    return { success: true, message: `Perangkat ${perangkat.nama} telah diperbaiki.` };
-                }
+            // Cek apakah pelapor memiliki laporan aktif untuk perangkat ini
+            const idx = this.laporanAktif.indexOf(perangkat.kodeInventaris);
+            if (idx === -1) {
+                return { success: false, message: `Anda tidak memiliki laporan aktif untuk perangkat ${perangkat.nama}.` };
             }
-            return { success: false, message: `Perangkat ${perangkat.nama} tidak dalam status rusak.` };
+
+            // Hapus dari daftar laporan aktif (sebelum menyelesaikan)
+            this.laporanAktif.splice(idx, 1);
+            this.jumlahLaporanAktif--;
+
+            // Sekarang panggil method selesaikan pada perangkat
+            const berhasil = perangkat.selesaikan();
+            if (berhasil) {
+                return { success: true, message: `Perangkat ${perangkat.nama} telah diperbaiki dan status dikembalikan ke Tersedia.` };
+            } else {
+                // Jika gagal, kembalikan ke daftar aktif
+                this.laporanAktif.push(perangkat.kodeInventaris);
+                this.jumlahLaporanAktif++;
+                return { success: false, message: `Gagal memperbaiki perangkat ${perangkat.nama}.` };
+            }
         }
     }
 
@@ -1919,96 +2009,7 @@
 
     function runDartCode() {
         const pre = document.getElementById('dartCodePre');
-        let code = pre.textContent;
-
-        // Tambahkan main() function di akhir
-        const mainFunction = `
-
-void main() {
-  print('==================================================');
-  print('  DEMONSTRASI SISTEM PELAPORAN KERUSAKAN PERANGKAT  ');
-  print('==================================================');
-  print('');
-
-  // 1. Buat perangkat
-  print('--- 1. INISIALISASI PERANGKAT ---');
-  var komputer1 = Komputer('PC-001', 'Dell OptiPlex 7070', 'Tersedia', 'Intel Core i7, SSD 512GB', 16);
-  var proyektor1 = Proyektor('PRJ-001', 'Epson EB-X05', 'Tersedia', 3200, '1024x768');
-  var printer1 = Printer('PRT-001', 'HP LaserJet M404', 'Tersedia', 'Laser Mono', 38);
-  print(' Komputer  : \${komputer1.nama} (\${komputer1.kodeInventaris})');
-  print(' Proyektor : \${proyektor1.nama} (\${proyektor1.kodeInventaris})');
-  print(' Printer   : \${printer1.nama} (\${printer1.kodeInventaris})');
-  print('');
-
-  // 2. Buat pelapor
-  print('--- 2. INISIALISASI PELAPOR ---');
-  var pelapor1 = Pelapor('Andi Pratama', '3201010101010001');
-  var pelapor2 = Pelapor('Budi Santoso', '3201010202020002');
-  pelapor1.tampilkanInfo();
-  print('');
-  pelapor2.tampilkanInfo();
-  print('');
-
-  // 3. Andi melaporkan komputer
-  print('--- 3. PELAPORAN: Andi melaporkan komputer ---');
-  var hasil1 = pelapor1.buatLaporan(komputer1);
-  print(hasil1['message']);
-  komputer1.tampilkanInfo();
-  print('');
-
-  // 4. Budi melaporkan proyektor
-  print('--- 4. PELAPORAN: Budi melaporkan proyektor ---');
-  var hasil2 = pelapor2.buatLaporan(proyektor1);
-  print(hasil2['message']);
-  proyektor1.tampilkanInfo();
-  print('');
-
-  // 5. Andi mencoba laporan kedua (printer) — harusnya berhasil karena batas 2
-  print('--- 5. PELAPORAN: Andi melaporkan printer (laporan ke-2) ---');
-  var hasil3 = pelapor1.buatLaporan(printer1);
-  print(hasil3['message']);
-  print('');
-
-  // 6. Andi coba laporan ketiga (harus gagal)
-  print('--- 6. PELAPORAN: Andi mencoba laporan ke-3 (harus gagal) ---');
-  var komputer2 = Komputer('PC-002', 'HP ProDesk 600', 'Tersedia', 'Intel Core i5, SSD 256GB', 8);
-  var hasil4 = pelapor1.buatLaporan(komputer2);
-  print(hasil4['message']);
-  print('');
-
-  // 7. Selesaikan laporan komputer
-  print('--- 7. PENYELESAIAN: Perbaiki komputer (Andi) ---');
-  var hasil5 = pelapor1.selesaikanLaporan(komputer1);
-  print(hasil5['message']);
-  komputer1.tampilkanInfo();
-  print('');
-
-  // 8. Buat laporan formal dengan LaporanKerusakan
-  print('--- 8. LAPORAN FORMAL: Buat laporan kerusakan printer ---');
-  var laporan = LaporanKerusakan('LRP-001', pelapor2, printer1, 'Printer tidak mau mencetak, error paper jam');
-  print('Laporan berhasil dibuat dengan ID: \${laporan.idLaporan}');
-  laporan.selesaikanLaporan();
-  print('Laporan selesai diproses!');
-  print('');
-
-  // 9. Tampilkan detail laporan
-  print('--- 9. DETAIL LAPORAN ---');
-  laporan.tampilkanDetail();
-
-  // 10. Tampilkan info pelapor setelah semua proses
-  print('--- 10. INFO PELAPOR SETELAH PROSES ---');
-  pelapor1.tampilkanInfo();
-  print('');
-  pelapor2.tampilkanInfo();
-
-  print('');
-  print('==================================================');
-  print('  DEMONSTRASI SELESAI ✅  ');
-  print('==================================================');
-}
-`;
-
-        code = code + mainFunction;
+        const code = pre.textContent;
 
         // Encode URL
         const encoded = encodeURIComponent(code);
