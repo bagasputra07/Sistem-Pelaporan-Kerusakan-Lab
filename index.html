@@ -1031,7 +1031,7 @@
 
             <!-- Box Pseudocode -->
             <div class="pseudocode-box">
-                <span class="pc-comment">// ALGORITMA SistemPelaporanKerusakan</span><br>
+                <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan</span><br>
                 <span class="pc-comment">// { Menangani pelaporan kerusakan perangkat lab dengan pendekatan OOP }</span><br>
                 <span class="pc-keyword">DEKLARASI</span><br>
                 &nbsp;&nbsp;<span class="pc-comment">// Tipe bentukan untuk objek Laporan</span><br>
@@ -1144,198 +1144,169 @@
                 <img src="WhatsApp Image 2026-06-24 at 12.40.16.jpeg" class="gambar-box" alt="Flowchart Algoritma Penyelesaian" />
             </div>
             
-            <div class="pseudocode-box">
-                ALGORITMA PENYELESAIAN LAPORAN KERUSAKAN PERANGKAT LABORATORIUM
+            <!-- Box Pseudocode -->
+            <div class="flowchart-section">
+        <h3>📋 Alur Proses (Flowchart)</h3>
+        <div class="flow-step">
+            <span class="step-num">1</span>
+            <span class="step-desc"><strong>Mulai</strong> — Sistem dijalankan</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">2</span>
+            <span class="step-desc"><strong>Pilih Pelapor Aktif</strong> — (input nama pelapor)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">3</span>
+            <span class="step-desc"><strong>Pilih Perangkat dengan Status Rusak</strong> — (input ID perangkat)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">4</span>
+            <span class="step-desc"><span class="condition">⚡ Keputusan:</span> <strong>Status Perangkat == Rusak?</strong></span>
+        </div>
+        <div class="flow-step" style="padding-left: 30px; border-left: 3px solid #22c55e;">
+            <span class="step-num" style="background: #22c55e;">✓</span>
+            <span class="step-desc"><span class="action">Ya →</span> Lanjut ke proses pelaporan</span>
+        </div>
+        <div class="flow-step" style="padding-left: 30px; border-left: 3px solid #ef4444;">
+            <span class="step-num" style="background: #ef4444;">✗</span>
+            <span class="step-desc"><span class="action">Tidak →</span> <span class="output">Tampilkan Error: "Perangkat tidak rusak"</span></span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">5</span>
+            <span class="step-desc"><span class="action">Hapus Laporan dari Daftar Aktif Pelapor</span> — (update status laporan)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">6</span>
+            <span class="step-desc"><span class="action">Ubah Status Perangkat menjadi 'Tersedia'</span> — (perbaikan selesai)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">7</span>
+            <span class="step-desc"><span class="action">Set tanggalSelesai = now()</span> — (catat waktu selesai)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">8</span>
+            <span class="step-desc"><span class="action">Set isSukses = true</span> — (flag keberhasilan)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">9</span>
+            <span class="step-desc"><span class="output">Cetak Nota Laporan Perbaikan</span> — (output laporan)</span>
+        </div>
+        <div class="flow-step">
+            <span class="step-num">10</span>
+            <span class="step-desc"><strong>Selesai</strong> — proses berakhir</span>
+        </div>
+    </div>
 
-DEKLARASI CLASS
+    <!-- SIMULASI INTERAKTIF -->
+    <h3>🧪 Simulasi Alur (dengan OOP)</h3>
+    <div class="form-grid">
+        <div><label>ID Perangkat</label><input id="deviceId" placeholder="Contoh: PC-01" value="PC-01"></div>
+        <div><label>Nama Pelapor</label><input id="reporter" placeholder="Nama pelapor" value="Andi"></div>
+        <div><label>Deskripsi Kerusakan</label><input id="desc" placeholder="Deskripsi..." value="Tidak bisa booting"></div>
+        <div><label>Tanggal Kejadian</label><input id="date" type="date" value="2026-06-24"></div>
+    </div>
+    <div class="flex-row">
+        <button class="btn" id="runSimulation">▶ Jalankan Proses (sesuai flowchart)</button>
+        <button class="btn" style="background:#6b7280;" id="resetSim">↺ Reset</button>
+    </div>
 
-```text
-CLASS Perangkat
-    kodeInventaris : String
-    nama           : String
-    status         : String
+    <div class="result-area" id="resultDisplay">
+        <span style="color:#94a3b8;">// Klik tombol untuk menjalankan simulasi alur...</span>
+    </div>
 
-    METHOD selesaikan()
-        status ← "Tersedia"
-    END METHOD
-END CLASS
+    <!-- SOURCE CODE (PSEUDOCODE sesuai flowchart) -->
+    <h3 style="margin-top: 28px;">📄 Pseudocode (Alur Flowchart)</h3>
+    <div class="code-box">
+        <span class="pc-comment">// ============================================================</span>
+        <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan Perangkat Lab</span>
+        <span class="pc-comment">// { Berdasarkan alur flowchart yang diberikan }</span>
+        <span class="pc-comment">// ============================================================</span>
 
+        <span class="pc-keyword">DEKLARASI</span>
+        <span class="pc-comment">// Variabel input</span>
+        &nbsp;&nbsp;pelaporAktif : string
+        &nbsp;&nbsp;idPerangkat : string
+        &nbsp;&nbsp;statusPerangkat : string
+        &nbsp;&nbsp;laporanAktif : array of Laporan
+        &nbsp;&nbsp;tanggalSelesai : datetime
+        &nbsp;&nbsp;isSukses : boolean
+        &nbsp;&nbsp;notaPerbaikan : string
 
-CLASS Pelapor
-    nama                 : String
-    nik                  : String
-    jumlahLaporanAktif   : Integer
-    laporanAktif         : List
+        <span class="pc-comment">// Tipe bentukan untuk objek Laporan (OOP)</span>
+        &nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-class">Laporan</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idLaporan : string
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idPerangkat : string
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> deskripsi : string
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggal : date
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> pelapor : string
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime
 
-    METHOD selesaikanLaporan(perangkat)
-        Hapus perangkat.kodeInventaris
-        dari laporanAktif
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggal &lt;- tanggal
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.pelapor &lt;- pelapor
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
 
-        jumlahLaporanAktif ←
-        jumlahLaporanAktif - 1
-    END METHOD
-END CLASS
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">hapusDariDaftarAktif</span>()
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Menghapus laporan dari daftar aktif pelapor</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporanAktif.remove(<span class="pc-keyword">this</span>)
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
 
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getID</span>() -> string
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
+        &nbsp;&nbsp;<span class="pc-keyword">END CLASS</span>
 
-CLASS LaporanKerusakan
-    idLaporan       : String
-    tanggalLapor    : DateTime
-    tanggalSelesai  : DateTime
-    isSukses        : Boolean
+        <span class="pc-keyword">ALGORITMA UTAMA</span>
+        <span class="pc-comment">// === MULAI ===</span>
+        &nbsp;&nbsp;OUTPUT <span class="pc-string">"=== SISTEM PELAPORAN KERUSAKAN PERANGKAT LAB ==="</span>
 
-    METHOD selesaikanLaporan()
-        tanggalSelesai ← NOW()
-        isSukses ← TRUE
-    END METHOD
-END CLASS
-```
+        <span class="pc-comment">// === Pilih Pelapor Aktif ===</span>
+        &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Nama Pelapor: "</span>
+        &nbsp;&nbsp;INPUT pelaporAktif
 
-DEKLARASI VARIABEL
+        <span class="pc-comment">// === Pilih Perangkat dengan Status Rusak ===</span>
+        &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan ID Perangkat: "</span>
+        &nbsp;&nbsp;INPUT idPerangkat
+        &nbsp;&nbsp;statusPerangkat &lt;- cekStatusPerangkat(idPerangkat)  <span class="pc-comment">// Cek status dari database</span>
 
-```text
-pelapor   : Pelapor
-perangkat : Perangkat
-laporan   : LaporanKerusakan
-```
+        <span class="pc-comment">// === Keputusan: Status Perangkat == Rusak? ===</span>
+        &nbsp;&nbsp;<span class="pc-condition">IF</span> (statusPerangkat == <span class="pc-string">"Rusak"</span>) <span class="pc-condition">THEN</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Ya: Proses pelaporan ===</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru &lt;- <span class="pc-keyword">NEW</span> Laporan(idPerangkat, deskripsi, tanggal, pelaporAktif)
 
-ALGORITMA IPO
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Hapus Laporan dari Daftar Aktif Pelapor</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru.hapusDariDaftarAktif()
 
-```text
-BEGIN
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Ubah Status Perangkat menjadi 'Tersedia'</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;ubahStatusPerangkat(idPerangkat, <span class="pc-string">"Tersedia"</span>)
 
-    ======================
-    INPUT
-    ======================
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set tanggalSelesai = now()</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;tanggalSelesai &lt;- currentDateTime()
 
-    Pilih Pelapor Aktif
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set isSukses = true</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;isSukses &lt;- <span class="pc-keyword">TRUE</span>
 
-    Pilih Perangkat
-    dengan Status Rusak
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Cetak Nota Laporan Perbaikan</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;notaPerbaikan &lt;- cetakNota(laporanBaru, tanggalSelesai, isSukses)
+        &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT notaPerbaikan
 
-    ======================
-    PROCESS
-    ======================
+        &nbsp;&nbsp;<span class="pc-condition">ELSE</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Tidak: Tampilkan Error ===</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Perangkat tidak rusak"</span>
+        &nbsp;&nbsp;<span class="pc-condition">END IF</span>
 
-    IF perangkat.status = "Rusak" THEN
-
-        pelapor.selesaikanLaporan(perangkat)
-
-        perangkat.selesaikan()
-
-        laporan.selesaikanLaporan()
-
-    ======================
-    OUTPUT
-    ======================
-
-        OUTPUT "=== NOTA LAPORAN PERBAIKAN ==="
-
-        OUTPUT "ID Laporan      : ",
-               laporan.idLaporan
-
-        OUTPUT "Pelapor         : ",
-               pelapor.nama
-
-        OUTPUT "Perangkat       : ",
-               perangkat.nama
-
-        OUTPUT "Status Baru     : ",
-               perangkat.status
-
-        OUTPUT "Tanggal Selesai : ",
-               laporan.tanggalSelesai
-
-        OUTPUT "Status Laporan  : SELESAI"
-
-    ELSE
-
-        OUTPUT
-        "ERROR : Perangkat tidak rusak"
-
-    ENDIF
-
-END
-```
-
-            </div>
+        <span class="pc-comment">// === SELESAI ===</span>
+        &nbsp;&nbsp;OUTPUT <span class="pc-string">"--- Proses selesai ---"</span>
+        <span class="pc-keyword">END ALGORITMA</span>
+    </div>
         </div>
 
-        <!-- Tab Flowchart IPO -->
-        <div class="diag-tab-content" id="diag-ipo">
-            <p style="margin-bottom: 20px; color: var(--text-dim);">
-                Flowchart sistem dengan pembagian jelas antara <strong>Input</strong>, <strong>Processing</strong>, dan <strong>Output</strong>.
-            </p>
-            <div class="mermaid-container">
-                <div class="mermaid">
-                    flowchart TD
-                        subgraph Input
-                            A[Mulai] --> B[Pilih Pelapor]
-                            B --> C[Pilih Perangkat]
-                            C --> D[Pilih Aksi: Laporkan / Selesaikan]
-                        end
-
-                        subgraph Processing
-                            D --> E{Aksi}
-                            E -->|Laporkan| F{Perangkat tersedia?}
-                            F -- Ya --> G[Buat objek LaporanKerusakan]
-                            G --> H[Ubah status = RUSAK]
-                            H --> I[Tambah ke daftar pelapor]
-                            F -- Tidak --> J[Tampilkan error: tidak tersedia]
-
-                            E -->|Selesaikan| K{Status == RUSAK?}
-                            K -- Ya --> L[Hapus dari daftar pelapor]
-                            L --> M[Ubah status = TERSEDIA]
-                            M --> N[Tandai selesai & catat tanggal]
-                            K -- Tidak --> O[Tampilkan error: tidak rusak]
-                        end
-
-                        subgraph Output
-                            I --> P[Tampilkan notifikasi sukses]
-                            P --> Q[Selesai]
-                            J --> Q
-                            N --> R[Cetak nota laporan]
-                            R --> Q
-                            O --> Q
-                        end
-                </div>
-            </div>
-            <div class="pseudocode-box">
-                <span class="pc-comment">// Pseudocode - Flowchart IPO</span><br>
-                <span class="pc-keyword">START</span><br>
-                <span class="pc-comment">// === INPUT ===</span><br>
-                &nbsp;&nbsp;<span class="pc-var">pelapor</span> = pilihPelapor()<br>
-                &nbsp;&nbsp;<span class="pc-var">perangkat</span> = pilihPerangkat()<br>
-                &nbsp;&nbsp;<span class="pc-var">aksi</span> = pilihAksi()<br>
-                <span class="pc-comment">// === PROCESSING ===</span><br>
-                &nbsp;&nbsp;<span class="pc-condition">IF</span> aksi == <span class="pc-string">"Laporkan"</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Tersedia'</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporan = <span class="pc-keyword">new</span> LaporanKerusakan(pelapor, perangkat)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perangkat.laporkan(pelapor.nama)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pelapor.tambahLaporan(perangkat)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error = <span class="pc-string">"Perangkat tidak tersedia"</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                &nbsp;&nbsp;<span class="pc-condition">ELSE IF</span> aksi == <span class="pc-string">"Selesaikan"</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> perangkat.status == <span class="pc-string">'Rusak'</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pelapor.hapusLaporan(perangkat)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perangkat.selesaikan()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporan.selesaikan()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error = <span class="pc-string">"Perangkat tidak rusak"</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                <span class="pc-comment">// === OUTPUT ===</span><br>
-                &nbsp;&nbsp;<span class="pc-condition">IF</span> error == <span class="pc-keyword">null</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanNotifikasi(<span class="pc-string">"Aksi berhasil"</span>)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">IF</span> aksi == <span class="pc-string">"Selesaikan"</span> <span class="pc-condition">THEN</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cetakNota(laporan)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                &nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;tampilkanError(error)<br>
-                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
-                <span class="pc-keyword">END</span>
-            </div>
-        </div>
+        
     </div>
 
 </div>
