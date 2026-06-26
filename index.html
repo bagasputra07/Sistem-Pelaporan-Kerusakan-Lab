@@ -1723,22 +1723,16 @@
             return { success: false, message: 'Gagal melaporkan perangkat.' };
         }
         selesaikanLaporan(perangkat) {
-            // Cek apakah pelapor memiliki laporan aktif untuk perangkat ini
             const idx = this.laporanAktif.indexOf(perangkat.kodeInventaris);
             if (idx === -1) {
                 return { success: false, message: `Anda tidak memiliki laporan aktif untuk perangkat ${perangkat.nama}.` };
             }
-
-            // Hapus dari daftar laporan aktif (sebelum menyelesaikan)
             this.laporanAktif.splice(idx, 1);
             this.jumlahLaporanAktif--;
-
-            // Sekarang panggil method selesaikan pada perangkat
             const berhasil = perangkat.selesaikan();
             if (berhasil) {
                 return { success: true, message: `Perangkat ${perangkat.nama} telah diperbaiki dan status dikembalikan ke Tersedia.` };
             } else {
-                // Jika gagal, kembalikan ke daftar aktif
                 this.laporanAktif.push(perangkat.kodeInventaris);
                 this.jumlahLaporanAktif++;
                 return { success: false, message: `Gagal memperbaiki perangkat ${perangkat.nama}.` };
@@ -2004,16 +1998,12 @@
     }
 
     // ============================================================
-    //  RUN CODE — BUKA DARTPAD DI MODAL
+    //  RUN CODE — BUKA DARTPAD DENGAN GIST ID
     // ============================================================
 
     function runDartCode() {
-        const pre = document.getElementById('dartCodePre');
-        const code = pre.textContent;
-
-        // Encode URL
-        const encoded = encodeURIComponent(code);
-        const url = `https://dartpad.dev/embed.html?code=${encoded}&run=true`;
+        const gistId = '3e585ab694b3f06dc89c1cbfb01d12b1';
+        const url = `https://dartpad.dev/embed.html?gist=${gistId}&run=true`;
 
         const frame = document.getElementById('dartFrame');
         frame.src = url;
