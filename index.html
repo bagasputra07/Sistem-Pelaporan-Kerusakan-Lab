@@ -562,7 +562,6 @@
             justify-content: center;
             align-items: center;
         }
-        /* Gaya untuk gambar di dalam box */
         .gambar-box {
             max-width: 100%;
             height: auto;
@@ -598,6 +597,182 @@
         }
         .pseudocode-box .pc-condition {
             color: var(--accent-purple);
+        }
+
+        /* Flowchart section untuk diag-resolve */
+        .flowchart-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 18px 16px;
+            margin: 16px 0;
+            border: 1px solid var(--border-color);
+        }
+        .flowchart-section h3 {
+            margin-top: 0;
+            color: var(--accent-cyan);
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(42, 58, 74, 0.4);
+        }
+        .flow-step:last-child {
+            border-bottom: none;
+        }
+        .step-num {
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .step-desc {
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .step-desc strong {
+            color: var(--text-primary);
+        }
+        .step-desc .condition {
+            background: #fef3c7;
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #92400e;
+        }
+        .step-desc .action {
+            background: #dbeafe;
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+        .step-desc .output {
+            background: #d1fae5;
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #065f46;
+        }
+
+        /* Form grid untuk simulasi */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 20px;
+            margin: 12px 0;
+        }
+        .form-grid label { 
+            font-weight: 600; 
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        .form-grid input { 
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            font-family: var(--font-sans);
+        }
+        .form-grid input:focus {
+            border-color: var(--accent-blue);
+        }
+        .flex-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 12px 0 8px;
+        }
+        .btn {
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            font-family: var(--font-sans);
+        }
+        .btn:hover { 
+            background: #3a8aee; 
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.25);
+        }
+        .btn-secondary {
+            background: #6b7280;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .result-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 12px;
+            border: 1px solid var(--border-color);
+            min-height: 60px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        .result-area .success { color: var(--accent-green); font-weight: bold; }
+        .result-area .error { color: var(--accent-red); font-weight: bold; }
+        .result-area .info { color: var(--accent-blue); }
+
+        /* Code box untuk pseudocode */
+        .code-box {
+            background: #0a0e14;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-top: 16px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-primary);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+        .code-box .pc-comment {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .code-box .pc-keyword {
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+        .code-box .pc-string {
+            color: var(--accent-green);
+        }
+        .code-box .pc-func {
+            color: var(--accent-blue);
+        }
+        .code-box .pc-var {
+            color: var(--accent-orange);
+        }
+        .code-box .pc-condition {
+            color: var(--accent-purple);
+        }
+        .code-box .pc-class {
+            color: var(--accent-orange);
         }
 
         @media (max-width: 768px) {
@@ -638,6 +813,9 @@
             .diag-tab-btn {
                 width: 100%;
                 text-align: center;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -948,7 +1126,6 @@
             <button class="diag-tab-btn active" onclick="switchDiagramTab(event, 'diag-class')">DIAGRAM CLASS</button>
             <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-report')">ALGORITMA PELAPORAN</button>
             <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-resolve')">ALGORITMA PENYELESAIAN</button>
-            <button class="diag-tab-btn" onclick="switchDiagramTab(event, 'diag-ipo')">FLOWCHART IPO</button>
         </div>
 
         <!-- Tab Diagram Class -->
@@ -1018,7 +1195,7 @@
             </div>
         </div>
 
-        <!-- ===== TAB ALGORITMA PELAPORAN (dengan gambar asli) ===== -->
+        <!-- Tab Algoritma Pelaporan -->
         <div class="diag-tab-content" id="diag-report">
             <p style="margin-bottom: 20px; color: var(--text-dim);">
                 Flowchart dan pseudocode untuk alur pelaporan kerusakan perangkat laboratorium.
@@ -1135,180 +1312,108 @@
             </div>
         </div>
 
-               <!-- Tab Algoritma Penyelesaian -->
+        <!-- Tab Algoritma Penyelesaian (dengan tata letak persis seperti tab Algoritma Pelaporan) -->
         <div class="diag-tab-content" id="diag-resolve">
             <p style="margin-bottom: 20px; color: var(--text-dim);">
                 Flowchart dan pseudocode untuk alur penyelesaian (perbaikan) laporan kerusakan.
             </p>
+
+            <!-- Box Gambar -->
             <div class="image-box">
                 <img src="WhatsApp Image 2026-06-24 at 12.40.16.jpeg" class="gambar-box" alt="Flowchart Algoritma Penyelesaian" />
             </div>
-            
+
             <!-- Box Pseudocode -->
-            <div class="flowchart-section">
-        <h3>📋 Alur Proses (Flowchart)</h3>
-        <div class="flow-step">
-            <span class="step-num">1</span>
-            <span class="step-desc"><strong>Mulai</strong> — Sistem dijalankan</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">2</span>
-            <span class="step-desc"><strong>Pilih Pelapor Aktif</strong> — (input nama pelapor)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">3</span>
-            <span class="step-desc"><strong>Pilih Perangkat dengan Status Rusak</strong> — (input ID perangkat)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">4</span>
-            <span class="step-desc"><span class="condition">⚡ Keputusan:</span> <strong>Status Perangkat == Rusak?</strong></span>
-        </div>
-        <div class="flow-step" style="padding-left: 30px; border-left: 3px solid #22c55e;">
-            <span class="step-num" style="background: #22c55e;">✓</span>
-            <span class="step-desc"><span class="action">Ya →</span> Lanjut ke proses pelaporan</span>
-        </div>
-        <div class="flow-step" style="padding-left: 30px; border-left: 3px solid #ef4444;">
-            <span class="step-num" style="background: #ef4444;">✗</span>
-            <span class="step-desc"><span class="action">Tidak →</span> <span class="output">Tampilkan Error: "Perangkat tidak rusak"</span></span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">5</span>
-            <span class="step-desc"><span class="action">Hapus Laporan dari Daftar Aktif Pelapor</span> — (update status laporan)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">6</span>
-            <span class="step-desc"><span class="action">Ubah Status Perangkat menjadi 'Tersedia'</span> — (perbaikan selesai)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">7</span>
-            <span class="step-desc"><span class="action">Set tanggalSelesai = now()</span> — (catat waktu selesai)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">8</span>
-            <span class="step-desc"><span class="action">Set isSukses = true</span> — (flag keberhasilan)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">9</span>
-            <span class="step-desc"><span class="output">Cetak Nota Laporan Perbaikan</span> — (output laporan)</span>
-        </div>
-        <div class="flow-step">
-            <span class="step-num">10</span>
-            <span class="step-desc"><strong>Selesai</strong> — proses berakhir</span>
+            <div class="pseudocode-box">
+                <span class="pc-comment">// ============================================================</span><br>
+                <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan Perangkat Lab</span><br>
+                <span class="pc-comment">// { Berdasarkan alur flowchart yang diberikan }</span><br>
+                <span class="pc-comment">// ============================================================</span><br>
+                <br>
+                <span class="pc-keyword">DEKLARASI</span><br>
+                <span class="pc-comment">// Variabel input</span><br>
+                &nbsp;&nbsp;pelaporAktif : string<br>
+                &nbsp;&nbsp;idPerangkat : string<br>
+                &nbsp;&nbsp;statusPerangkat : string<br>
+                &nbsp;&nbsp;laporanAktif : array of Laporan<br>
+                &nbsp;&nbsp;tanggalSelesai : datetime<br>
+                &nbsp;&nbsp;isSukses : boolean<br>
+                &nbsp;&nbsp;notaPerbaikan : string<br>
+                <br>
+                <span class="pc-comment">// Tipe bentukan untuk objek Laporan (OOP)</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-class">Laporan</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idLaporan : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idPerangkat : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> deskripsi : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggal : date<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> pelapor : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggal &lt;- tanggal<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.pelapor &lt;- pelapor<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">hapusDariDaftarAktif</span>()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Menghapus laporan dari daftar aktif pelapor</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporanAktif.remove(<span class="pc-keyword">this</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getID</span>() -> string<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span><br>
+                &nbsp;&nbsp;<span class="pc-keyword">END CLASS</span><br>
+                <br>
+                <span class="pc-keyword">ALGORITMA UTAMA</span><br>
+                <span class="pc-comment">// === MULAI ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"=== SISTEM PELAPORAN KERUSAKAN PERANGKAT LAB ==="</span><br>
+                <br>
+                <span class="pc-comment">// === Pilih Pelapor Aktif ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Nama Pelapor: "</span><br>
+                &nbsp;&nbsp;INPUT pelaporAktif<br>
+                <br>
+                <span class="pc-comment">// === Pilih Perangkat dengan Status Rusak ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan ID Perangkat: "</span><br>
+                &nbsp;&nbsp;INPUT idPerangkat<br>
+                &nbsp;&nbsp;statusPerangkat &lt;- cekStatusPerangkat(idPerangkat)  <span class="pc-comment">// Cek status dari database</span><br>
+                <br>
+                <span class="pc-comment">// === Keputusan: Status Perangkat == Rusak? ===</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">IF</span> (statusPerangkat == <span class="pc-string">"Rusak"</span>) <span class="pc-condition">THEN</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Ya: Proses pelaporan ===</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru &lt;- <span class="pc-keyword">NEW</span> Laporan(idPerangkat, deskripsi, tanggal, pelaporAktif)<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Hapus Laporan dari Daftar Aktif Pelapor</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru.hapusDariDaftarAktif()<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Ubah Status Perangkat menjadi 'Tersedia'</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;ubahStatusPerangkat(idPerangkat, <span class="pc-string">"Tersedia"</span>)<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set tanggalSelesai = now()</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;tanggalSelesai &lt;- currentDateTime()<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set isSukses = true</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;isSukses &lt;- <span class="pc-keyword">TRUE</span><br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Cetak Nota Laporan Perbaikan</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;notaPerbaikan &lt;- cetakNota(laporanBaru, tanggalSelesai, isSukses)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT notaPerbaikan<br>
+                <br>
+                &nbsp;&nbsp;<span class="pc-condition">ELSE</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Tidak: Tampilkan Error ===</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Perangkat tidak rusak"</span><br>
+                &nbsp;&nbsp;<span class="pc-condition">END IF</span><br>
+                <br>
+                <span class="pc-comment">// === SELESAI ===</span><br>
+                &nbsp;&nbsp;OUTPUT <span class="pc-string">"--- Proses selesai ---"</span><br>
+                <span class="pc-keyword">END ALGORITMA</span>
+            </div>
         </div>
     </div>
-
-    <!-- SIMULASI INTERAKTIF -->
-    <h3>🧪 Simulasi Alur (dengan OOP)</h3>
-    <div class="form-grid">
-        <div><label>ID Perangkat</label><input id="deviceId" placeholder="Contoh: PC-01" value="PC-01"></div>
-        <div><label>Nama Pelapor</label><input id="reporter" placeholder="Nama pelapor" value="Andi"></div>
-        <div><label>Deskripsi Kerusakan</label><input id="desc" placeholder="Deskripsi..." value="Tidak bisa booting"></div>
-        <div><label>Tanggal Kejadian</label><input id="date" type="date" value="2026-06-24"></div>
-    </div>
-    <div class="flex-row">
-        <button class="btn" id="runSimulation">▶ Jalankan Proses (sesuai flowchart)</button>
-        <button class="btn" style="background:#6b7280;" id="resetSim">↺ Reset</button>
-    </div>
-
-    <div class="result-area" id="resultDisplay">
-        <span style="color:#94a3b8;">// Klik tombol untuk menjalankan simulasi alur...</span>
-    </div>
-
-    <!-- SOURCE CODE (PSEUDOCODE sesuai flowchart) -->
-    <h3 style="margin-top: 28px;">📄 Pseudocode (Alur Flowchart)</h3>
-    <div class="code-box">
-        <span class="pc-comment">// ============================================================</span>
-        <span class="pc-comment">// ALGORITMA Sistem Pelaporan Kerusakan Perangkat Lab</span>
-        <span class="pc-comment">// { Berdasarkan alur flowchart yang diberikan }</span>
-        <span class="pc-comment">// ============================================================</span>
-
-        <span class="pc-keyword">DEKLARASI</span>
-        <span class="pc-comment">// Variabel input</span>
-        &nbsp;&nbsp;pelaporAktif : string
-        &nbsp;&nbsp;idPerangkat : string
-        &nbsp;&nbsp;statusPerangkat : string
-        &nbsp;&nbsp;laporanAktif : array of Laporan
-        &nbsp;&nbsp;tanggalSelesai : datetime
-        &nbsp;&nbsp;isSukses : boolean
-        &nbsp;&nbsp;notaPerbaikan : string
-
-        <span class="pc-comment">// Tipe bentukan untuk objek Laporan (OOP)</span>
-        &nbsp;&nbsp;<span class="pc-keyword">CLASS</span> <span class="pc-class">Laporan</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idLaporan : string
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> idPerangkat : string
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> deskripsi : string
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> tanggal : date
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> pelapor : string
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> status : string
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">PRIVATE</span> waktuDibuat : datetime
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">Constructor</span>(idPerangkat, deskripsi, tanggal, pelapor)
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.idPerangkat &lt;- idPerangkat
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.deskripsi &lt;- deskripsi
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.tanggal &lt;- tanggal
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.pelapor &lt;- pelapor
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.status &lt;- <span class="pc-string">"Dilaporkan"</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">this</span>.waktuDibuat &lt;- currentDateTime()
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">hapusDariDaftarAktif</span>()
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Menghapus laporan dari daftar aktif pelapor</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laporanAktif.remove(<span class="pc-keyword">this</span>)
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">METHOD</span> <span class="pc-func">getID</span>() -> string
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">RETURN</span> <span class="pc-keyword">this</span>.idLaporan
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-keyword">END METHOD</span>
-        &nbsp;&nbsp;<span class="pc-keyword">END CLASS</span>
-
-        <span class="pc-keyword">ALGORITMA UTAMA</span>
-        <span class="pc-comment">// === MULAI ===</span>
-        &nbsp;&nbsp;OUTPUT <span class="pc-string">"=== SISTEM PELAPORAN KERUSAKAN PERANGKAT LAB ==="</span>
-
-        <span class="pc-comment">// === Pilih Pelapor Aktif ===</span>
-        &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan Nama Pelapor: "</span>
-        &nbsp;&nbsp;INPUT pelaporAktif
-
-        <span class="pc-comment">// === Pilih Perangkat dengan Status Rusak ===</span>
-        &nbsp;&nbsp;OUTPUT <span class="pc-string">"Masukkan ID Perangkat: "</span>
-        &nbsp;&nbsp;INPUT idPerangkat
-        &nbsp;&nbsp;statusPerangkat &lt;- cekStatusPerangkat(idPerangkat)  <span class="pc-comment">// Cek status dari database</span>
-
-        <span class="pc-comment">// === Keputusan: Status Perangkat == Rusak? ===</span>
-        &nbsp;&nbsp;<span class="pc-condition">IF</span> (statusPerangkat == <span class="pc-string">"Rusak"</span>) <span class="pc-condition">THEN</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Ya: Proses pelaporan ===</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru &lt;- <span class="pc-keyword">NEW</span> Laporan(idPerangkat, deskripsi, tanggal, pelaporAktif)
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Hapus Laporan dari Daftar Aktif Pelapor</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;laporanBaru.hapusDariDaftarAktif()
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Ubah Status Perangkat menjadi 'Tersedia'</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;ubahStatusPerangkat(idPerangkat, <span class="pc-string">"Tersedia"</span>)
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set tanggalSelesai = now()</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;tanggalSelesai &lt;- currentDateTime()
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Set isSukses = true</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;isSukses &lt;- <span class="pc-keyword">TRUE</span>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// Cetak Nota Laporan Perbaikan</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;notaPerbaikan &lt;- cetakNota(laporanBaru, tanggalSelesai, isSukses)
-        &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT notaPerbaikan
-
-        &nbsp;&nbsp;<span class="pc-condition">ELSE</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-comment">// === Tidak: Tampilkan Error ===</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;OUTPUT <span class="pc-string">"ERROR: Perangkat tidak rusak"</span>
-        &nbsp;&nbsp;<span class="pc-condition">END IF</span>
-
-        <span class="pc-comment">// === SELESAI ===</span>
-        &nbsp;&nbsp;OUTPUT <span class="pc-string">"--- Proses selesai ---"</span>
-        <span class="pc-keyword">END ALGORITMA</span>
-    </div>
-        </div>
-
-        
-    </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
